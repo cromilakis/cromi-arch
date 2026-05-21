@@ -8,38 +8,44 @@ Documentación viva del harness de desarrollo agéntico. Cubre el ciclo de vida 
 
 ```mermaid
 flowchart TD
-    ISSUE["📋 GitHub Issue"] --> F0
+    ISSUE(["📋 GitHub Issue"])
+    F0["Fase 0 · Intake\nLee issue · clarifica con opciones · documenta scope"]
+    G0{"✋ Aprueba scope"}
+    TIPO{"¿Feature o bug?"}
 
-    subgraph F0 ["Fase 0 — Intake"]
-        direction LR
-        LE["Leer issue + imágenes"] --> CL["Clarificaciones con opciones"] --> SC["scope-initial.md"]
-    end
+    ISSUE --> F0 --> G0 --> TIPO
 
-    F0 --> G0{"✋ Gate"}
-    G0 --> TIPO{"¿Tipo de cambio?"}
+    F1["Fase 1 · SDD Spec"]
+    F2["Fase 2 · Análisis de riesgos"]
+    F3["Fase 3 · Diseño UX"]
+    G3{"✋ Aprueba UX"}
+    F3A["Fase 3 · Arquitectura"]
+    F4["Fase 4 · Tareas BDD"]
+    F5["Fase 5 · Implementación RED→GREEN→REFACTOR"]
+    F5B["Fase 5 · Fix RED→GREEN"]
+    F6["Fase 6 · Seguridad — Semgrep · audit · RBAC"]
+    F7["Fase 7 · Testing — unit · E2E · a11y · Lighthouse"]
+    F8["Fase 8 · Monitoreo — Sentry · alertas · runbook"]
+    F9["Fase 9 · CI/CD — pipeline · migrations"]
+    F10["Fase 10 · Documentación — ADRs · README · runbook"]
+    PR(["PR abierto · Vercel Preview generado"])
+    G9{"✋ Aprueba PR"}
+    DONE(["✅ Merge a main"])
 
-    TIPO -->|"Feature / cambio significativo"| FULL
-    TIPO -->|"Bug / cambio menor"| SHORT
+    TIPO -->|"🆕 Feature"| F1
+    F1 --> F2 --> F3 --> G3 --> F3A --> F4 --> F5
+    F5 --> F6
 
-    subgraph FULL ["11 Fases — Feature"]
-        direction LR
-        F1["1 · SDD Spec"] --> F2["2 · Riesgos"] --> F3["3 · Arquitectura + UX"] --> F4["4 · Tareas BDD"] --> F5F["5 · Implementación"] --> F6F["6 · Seguridad"] --> F7F["7 · Testing"] --> F8["8 · Monitoreo"] --> F9F["9 · CI/CD"]
-    end
+    TIPO -->|"🐛 Bug"| F5B
+    F5B --> F6
 
-    subgraph SHORT ["Flujo corto — Bug"]
-        direction LR
-        F5B["5 · Fix RED→GREEN"] --> F6B["6 · Seguridad"] --> F7B["7 · Testing"] --> F9B["9 · CI/CD"]
-    end
-
-    FULL --> PR
-    SHORT --> PR
-
-    PR["PR + Vercel Preview"] --> G9{"✋ Gate"}
-    G9 --> DONE["✅ Merge a main"]
+    F6 --> F7 --> F8 --> F9 --> F10 --> PR
+    PR --> G9 --> DONE
 
     style ISSUE fill:#6C5CE7,color:#fff
     style DONE fill:#00B894,color:#fff
     style G0 fill:#FDCB6E,color:#000
+    style G3 fill:#FDCB6E,color:#000
     style G9 fill:#FDCB6E,color:#000
     style TIPO fill:#dfe6e9,color:#000
     style PR fill:#0984E3,color:#fff
