@@ -97,6 +97,13 @@ Para debugging: revisar las cabeceras en la pestaña Network del navegador.
 
 ## 6. Consideraciones de Seguridad
 
+## Referencias
+
+- [Security Headers](/security-headers.md) — headers complementarios (CSP, HSTS) que van junto a CORS
+- [Rate Limiting](/decisiones/rate-limiting.md) — el middleware de CORS y rate limiting se combinan en `middleware.ts`
+- [Sesiones](/sesiones.md) — `SameSite=Lax` de Auth.js complementa la protección CORS contra CSRF
+- [OWASP API Security](/owasp-api.md) — API8: Security Misconfiguration incluye CORS mal configurado
+
 ### CORS no protege contra CSRF
 CORS controla qué orígenes pueden leer respuestas, pero **no previene que se envíen solicitudes**. Una solicitud POST maliciosa desde `sitio-malicioso.com` a tu API igual se envía — el navegador simplemente no puede leer la respuesta. Para proteger contra CSRF:
 - Usar tokens CSRF o el header `SameSite` en cookies

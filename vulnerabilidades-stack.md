@@ -42,7 +42,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 // Cache personalizada — no confiar solo en RSC cache
 import { Redis } from '@upstash/redis';
 
-const redis = new Redis({ url: process.env.REDIS_URL, token: process.env.REDIS_TOKEN });
+const redis = new Redis({ url: process.env.UPSTASH_REDIS_REST_URL, token: process.env.UPSTASH_REDIS_REST_TOKEN });
 
 export async function getUserData(userId: string) {
   const cacheKey = `user:${userId}:data`;
@@ -77,3 +77,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
 - [ ] `dangerouslySetInnerHTML` no se usa con input de usuario
 - [ ] Validación Zod en server components y API routes
 - [ ] CSP nonces regenerados por request (Next.js default, verificar custom config)
+
+## Referencias
+
+- [Supply Chain](/supply-chain.md) — prevención de dependencias vulnerables que introducen CVEs
+- [OWASP API Security](/owasp-api.md) — mitigaciones a nivel de código para los vectores descritos
+- [Security Headers](/security-headers.md) — CSP como mitigación de XSS específicos de Next.js
+- [Threat Intel](/threat-intel.md) — fuentes para detectar nuevos CVEs de Next.js en tiempo real

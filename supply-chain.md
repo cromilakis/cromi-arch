@@ -100,3 +100,10 @@ prefer-offline=true
 ```
 
 Este archivo debe estar en la raíz del proyecto y versionado en Git.
+
+## Referencias
+
+- [Threat Intel](/threat-intel.md) — fuentes para monitorear vulnerabilidades nuevas en tiempo real
+- [Vulnerabilidades del Stack](/vulnerabilidades-stack.md) — CVEs conocidos de Next.js y nuestras dependencias
+- [Fase 6 — Seguridad](/fases/fase-6-seguridad.md) — `npm audit` como parte del hardening obligatorio
+- [Code Review](/decisiones/code-review.md) — `npm audit --audit-level=high` como gate de CI

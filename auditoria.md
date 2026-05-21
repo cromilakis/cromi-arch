@@ -108,7 +108,6 @@ async function auditLogAsync(data: AuditLogData) {
   await prisma.auditLog.create({ data })
 }
 ```
-```
 
 ## API Middleware para auditoría de acceso
 
@@ -182,3 +181,29 @@ Se puede construir una vista de actividad con:
 - Timeline por usuario
 - Cambios recientes en entidades críticas
 - Alertas por acciones sospechosas (múltiples logins fallidos, accesos fuera de horario, etc.)
+
+## Nota sobre contexto en extensiones Prisma
+
+Las funciones `getCurrentUserId()`, `getRequestIP()` etc. requieren propagar el contexto HTTP hasta la capa de base de datos. Implementar con `AsyncLocalStorage`:
+
+```typescript
+// src/lib/request-context.ts
+import { AsyncLocalStorage } from 'node:async_hooks';
+
+interface RequestContext { userId?: string; userEmail?: string; ip?: string; userAgent?: string }
+export const requestContext = new AsyncLocalStorage<RequestContext>();
+export const getCurrentUserId = () => requestContext.getStore()?.userId;
+export const getRequestIP = () => requestContext.getStore()?.ip;
+```
+
+En `middleware.ts`, ejecutar cada request dentro del contexto:
+```typescript
+requestContext.run({ userId: session?.user?.id, ip: req.headers.get('x-forwarded-for') ?? '' }, () => handler(req))
+```
+
+## Referencias
+
+- [Soft Delete](/soft-delete.md) — el `AuditLog` del soft delete usa el mismo modelo
+- [Background Jobs](/background-jobs.md) — cron de limpieza de logs según política de retención
+- [Logging](/logging.md) — diferencia: audit log es trazabilidad de negocio, Pino es log de aplicación
+- [Sentry](/sentry.md) — diferencia: Sentry captura errores, auditoría captura intenciones

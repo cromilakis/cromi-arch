@@ -71,7 +71,7 @@ model Session {
   id           String   @id @default(cuid())
   userId       String
   expiresAt    DateTime
-  deviceInfo   String?  -- "Chrome/120, Windows 11"
+  deviceInfo   String?  // "Chrome/120, Windows 11"
   lastActiveAt DateTime @default(now())
 }
 ```
@@ -105,3 +105,10 @@ export async function POST(req: Request) {
 ```
 
 Si usa JWT, el token actual sigue siendo válido hasta expirar — incremente `tokenVersion` en DB y revíselo en el callback `jwt`.
+
+## Referencias
+
+- [OWASP API Security](/owasp-api.md) — API2: Broken Authentication, patrón de sesión corta + refresh
+- [Auditoría](/auditoria.md) — registrar LOGIN/LOGOUT y cambio de contraseña en audit log
+- [Rate Limiting](/decisiones/rate-limiting.md) — proteger el endpoint de login contra fuerza bruta
+- [Estrategia .env](/decisiones/env-strategy.md) — `AUTH_SECRET` y variables de providers OAuth

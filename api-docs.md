@@ -114,3 +114,13 @@ export function useCreateUser() {
   });
 }
 ```
+
+> `@repo/schemas` asume una estructura de monorepo. En un proyecto single-app, importar los schemas directamente con rutas relativas o desde `@/lib/schemas`.
+
+## Referencias
+
+- [OWASP API Security](/owasp-api.md) — API10: validar respuestas externas con Zod
+- [Error Handling](/error-handling.md) — formato de respuesta de errores alineado con este contrato
+- [Rate Limiting](/decisiones/rate-limiting.md) — proteger los endpoints documentados
+- [Testing](/testing.md) — tests de los schemas Zod como contratos de entrada/salida
+```

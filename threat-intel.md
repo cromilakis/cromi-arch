@@ -83,3 +83,10 @@ Para vulnerabilidades críticas o que requirieron cambios arquitectónicos, docu
 ---
 
 > **Tip**: Integra este flujo en tu pipeline CI/CD. Si una alerta es de severidad `critical` y afecta a producción, el build debe fallar automáticamente.
+
+## Referencias
+
+- [Supply Chain](/supply-chain.md) — prevención de dependencias vulnerables antes de que entren al repo
+- [Vulnerabilidades del Stack](/vulnerabilidades-stack.md) — CVEs conocidos de nuestro stack específico
+- [ADRs](/decisiones/adrs.md) — documentar decisiones arquitectónicas derivadas de vulnerabilidades críticas
+- [Fase 6 — Seguridad](/fases/fase-6-seguridad.md) — dónde se aplican los parches en el flujo de desarrollo

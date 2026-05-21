@@ -9,7 +9,7 @@ import type { NextConfig } from 'next';
 
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;
+  script-src 'self' 'unsafe-inline' https://js.stripe.com;
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: blob: https:;
   font-src 'self' data:;
@@ -107,6 +107,14 @@ Estos headers habilitan el aislamiento cross-origin (COOP + COEP = cross-origin 
 
 ## Notas adicionales
 
-- En desarrollo, el CSP se relaja automáticamente con Next.js (agrega `'unsafe-eval'` para HMR). En producción se aplica la política definida.
+- En desarrollo, Next.js agrega automáticamente `'unsafe-eval'` para HMR. La config de producción arriba NO lo incluye — en App Router el build de producción no necesita `eval`. Si lo agregas, abres una brecha XSS seria.
+- Para eliminar `'unsafe-inline'` de scripts y tener una CSP más estricta, migrar a nonces (Next.js los genera por request con `generateNonce`).
 - Si usas next/image con dominios externos, agrégalos a `img-src`.
 - Verifica periódicamente que los headers se sirvan correctamente con `curl -I https://tudominio.com`.
+
+## Referencias
+
+- [CORS](/cors.md) — headers de origen permitido que complementan el CSP
+- [OWASP API Security](/owasp-api.md) — API8: Security Misconfiguration, headers como primera línea de defensa
+- [Vulnerabilidades del Stack](/vulnerabilidades-stack.md) — CSP como mitigación de XSS por input no sanitizado
+- [Fase 6 — Seguridad](/fases/fase-6-seguridad.md) — verificación de headers como parte del hardening

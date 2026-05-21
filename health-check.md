@@ -1,7 +1,5 @@
 # Endpoint de Health Check
 
-> INVESTIGADO: Next.js API route patterns, Kubernetes readiness/liveness probes, uptime monitoring services.
-
 ## 1. Ruta de health check
 
 `GET /api/health` — verifica el estado de todos los servicios críticos.
@@ -79,6 +77,16 @@ async function checkStorage() {
     return 'error';
   }
 }
+
+async function checkRedis() {
+  try {
+    const redis = Redis.fromEnv();
+    await redis.ping();
+    return 'ok';
+  } catch {
+    return 'error';
+  }
+}
 ```
 
 ## 4. Integración con Vercel
@@ -99,3 +107,9 @@ URL: https://tudominio.com/api/health
 | **UptimeRobot** | `GET /api/health` cada 5 minutos |
 
 Configurar alertas en Slack/Email cuando el status sea `degradado` por más de 2 chequeos consecutivos.
+
+## Referencias
+
+- [Sentry](/sentry.md) — monitoreo complementario de errores en tiempo real
+- [Fase 8 — Monitoreo](/fases/fase-8-monitoreo.md) — contexto del plan de monitoreo general
+- [Background Jobs](/background-jobs.md) — los crons también deberían tener su propio endpoint de health o logs de éxito/fallo

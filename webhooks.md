@@ -5,14 +5,13 @@
 ```typescript
 // app/api/webhooks/stripe/route.ts
 import Stripe from 'stripe';
-import { buffer } from 'node:stream/consumers';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
   const sig = req.headers.get('stripe-signature')!;
-  const body = await buffer(req.body!);
+  const body = Buffer.from(await req.arrayBuffer());
 
   let event: Stripe.Event;
   try {
@@ -121,3 +120,10 @@ stripe trigger checkout.session.completed
 - Sentry captura errores no manejados en webhooks.
 - Pino para logging estructurado de cada evento recibido.
 - Tabla `processed_event` para auditoría.
+
+## Referencias
+
+- [Background Jobs](/background-jobs.md) — delegar procesamiento pesado de webhooks a una queue (Inngest)
+- [Rate Limiting](/decisiones/rate-limiting.md) — `webhookLimiter` con token bucket para endpoints de webhooks
+- [Auditoría](/auditoria.md) — registrar eventos de pago en el audit log
+- [Estrategia .env](/decisiones/env-strategy.md) — `STRIPE_SECRET_KEY` y `STRIPE_WEBHOOK_SECRET`

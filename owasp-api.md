@@ -68,15 +68,12 @@ const userAll = await prisma.user.findUnique({
 Rate limiting en CADA endpoint + paginación obligatoria.
 
 ```typescript
-import { rateLimit } from '@/lib/rate-limit';
-
-const limiter = rateLimit({ interval: 60 * 1000, uniqueTokenPerInterval: 500 });
+import { rateLimitCheck, apiLimiter } from '@/lib/rate-limit';
 
 export async function GET(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown';
-  const { success } = await limiter.check(ip, 30); // 30 requests/minuto
-
-  if (!success) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+  const limited = await rateLimitCheck(ip, apiLimiter);
+  if (limited) return limited;
 
   const { searchParams } = new URL(req.url);
   const page = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10));
@@ -136,10 +133,7 @@ export async function validateBusinessFlow(req: NextRequest) {
     return NextResponse.json({ error: 'Acción bloqueada por seguridad' }, { status: 403 });
   }
 
-  // Captcha después de N intentos en el mismo flujo
-  if (/* lógica de umbral */) {
-    return NextResponse.json({ challenge: 'captcha_required' }, { status: 428 });
-  }
+  // Captcha: agregar umbral basado en historial del usuario si se requiere
 }
 ```
 
@@ -170,24 +164,12 @@ export async function fetchExternal(urlStr: string) {
 
 ## API8: Security Misconfiguration
 
-```typescript
-// next.config.js
-const nextConfig = {
-  async headers() {
-    return [{
-      source: '/(.*)',
-      headers: [
-        { key: 'X-Frame-Options', value: 'DENY' },
-        { key: 'X-Content-Type-Options', value: 'nosniff' },
-        { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
-        { key: 'X-DNS-Prefetch-Control', value: 'off' },
-      ],
-    }];
-  },
-  // ❌ producción: experimental: { isrFlushToDisk: false }
-  // ❌ producción: env NEXT_PUBLIC_... expuesto
-};
-```
+Headers de seguridad completos (CSP, HSTS, X-Frame-Options, etc.) en [Security Headers](/security-headers.md).
+
+Reglas adicionales:
+- `NEXT_PUBLIC_` solo para variables que el cliente necesita leer — nunca para secretos
+- `npm audit --audit-level=high` en CI (ver [Supply Chain](/supply-chain.md))
+- Nunca dejar `experimental.isrFlushToDisk: true` en producción
 
 ## API9: Improper Inventory Management
 
@@ -218,10 +200,8 @@ const safe = ExternalUserSchema.parse(raw); // lanza si no cumple esquema
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { rateLimit } from '@/lib/rate-limit';
+import { rateLimitCheck, apiLimiter } from '@/lib/rate-limit';
 import { z } from 'zod';
-
-const limiter = rateLimit({ interval: 60_000, uniqueTokenPerInterval: 500 });
 
 const UpdateSchema = z.object({
   title: z.string().min(1).max(200).optional(),
@@ -231,8 +211,8 @@ const UpdateSchema = z.object({
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   // API4: Rate limit
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown';
-  const { success } = await limiter.check(ip, 20);
-  if (!success) return NextResponse.json({ error: 'Rate limit' }, { status: 429 });
+  const limited = await rateLimitCheck(ip, apiLimiter);
+  if (limited) return limited;
 
   // API2: Auth
   const session = await getServerSession(authOptions);
@@ -264,4 +244,13 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
   return NextResponse.json(updated);
 }
+```
+
+## Referencias
+
+- [Rate Limiting](/decisiones/rate-limiting.md) — API4: implementación completa con Upstash
+- [Security Headers](/security-headers.md) — API8: configuración completa de CSP y headers
+- [Sesiones](/sesiones.md) — API2: estrategia JWT vs Database Sessions
+- [Auditoría](/auditoria.md) — trazabilidad de operaciones sensibles (API5, API6)
+- [Error Handling](/error-handling.md) — manejo uniforme de errores en los handlers seguros
 ```
