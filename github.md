@@ -1,4 +1,4 @@
-# GitHub — Convenciones y Buenas Prácticas
+# GitHub
 
 ## Modelo de trabajo
 

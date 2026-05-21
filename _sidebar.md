@@ -14,7 +14,7 @@
   - [Fase 10 — Documentación](/fases/fase-10-documentacion.md)
 - **Decisiones Transversales**
   - [🧠 ADRs](/decisiones/adrs.md)
-  - [🐙 GitHub — Convenciones](/github.md)
+  - [🐙 GitHub](/github.md)
   - [🚦 Rate Limiting](/decisiones/rate-limiting.md)
   - [🔐 Estrategia .env](/decisiones/env-strategy.md)
   - [👁️ Code Review](/decisiones/code-review.md)
