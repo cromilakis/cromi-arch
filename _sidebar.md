@@ -54,6 +54,7 @@
   - [⚡ Error Handling](/error-handling.md)
   - [📊 Sentry](/sentry.md)
   - [📝 Logging](/logging.md)
+  - [🔭 OpenTelemetry](/opentelemetry.md)
 - **Desarrollo y UX**
   - [💻 Local Dev Setup](/local-dev.md)
   - [🎨 Design System](/design-system.md)
@@ -67,6 +68,7 @@
   - [📧 Email Templates](/email-templates.md)
   - [🔌 Integraciones Externas](/integraciones.md)
   - [📦 Manejo de Dependencias](/dependencies.md)
+  - [⬆️ Estrategia de Upgrades](/upgrade-strategy.md)
   - [📊 Analytics](/analytics.md)
   - [💬 Errores al Usuario](/errores-usuario.md)
   - [🚩 Feature Flags](/feature-flags.md)

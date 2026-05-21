@@ -111,6 +111,7 @@ flowchart TD
 | [💬 Errores de Usuario](errores-usuario.md) | Mapeo técnico → mensajes amigables |
 | [📊 Logging](logging.md) | Pino, logging estructurado JSON |
 | [📡 Monitoreo](sentry.md) | Sentry DSN, alertas, performance traces |
+| [🔭 OpenTelemetry](opentelemetry.md) | Distributed tracing, spans por operación, correlación con Pino y Sentry |
 | [🚨 Disaster Recovery](disaster-recovery.md) | RTO/RPO, backups, runbooks por escenario, post-mortem |
 | [❤️ Health Check](health-check.md) | Endpoint `/api/health`, umbrales |
 | [🚀 CI/CD](fases/fase-9-cicd.md) | GitHub Actions, Vercel, pipeline completo |
@@ -125,6 +126,7 @@ flowchart TD
 ### Decisiones y referencias
 | | |
 |---|---|
+| [⬆️ Estrategia de Upgrades](upgrade-strategy.md) | Proceso para majors de framework, pinning, calendario trimestral |
 | [📋 ADRs](decisiones/adrs.md) | Architecture Decision Records |
 | [🐙 GitHub](github.md) | Branches, commits convencionales, PRs, labels, merge strategy |
 | [📦 Dependencias](dependencies.md) | Inventario y criterios de selección |
