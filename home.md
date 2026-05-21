@@ -28,9 +28,10 @@ flowchart TD
     F8["Fase 8 · Monitoreo — Sentry · alertas · runbook"]
     F9["Fase 9 · CI/CD — pipeline · migrations"]
     F10["Fase 10 · Documentación — ADRs · README · runbook"]
-    PR(["PR abierto · Vercel Preview generado"])
-    G9{"✋ Aprueba PR"}
-    DONE(["✅ Merge a main"])
+    PR(["PR abierto · CI verde · Vercel Preview listo"])
+    G9{"✋ Revisa preview\n¿Integro a main?"}
+    MERGE["Merge a main\npor el humano o vía agente"]
+    DONE(["🚀 Deploy a producción\nautomático en Vercel"])
 
     TIPO -->|"🆕 Feature"| F1
     F1 --> F2 --> F3 --> G3 --> F3A --> F4 --> F5
@@ -40,10 +41,11 @@ flowchart TD
     F5B --> F6
 
     F6 --> F7 --> F8 --> F9 --> F10 --> PR
-    PR --> G9 --> DONE
+    PR --> G9 --> MERGE --> DONE
 
     style ISSUE fill:#6C5CE7,color:#fff
     style DONE fill:#00B894,color:#fff
+    style MERGE fill:#636e72,color:#fff
     style G0 fill:#FDCB6E,color:#000
     style G3 fill:#FDCB6E,color:#000
     style G9 fill:#FDCB6E,color:#000

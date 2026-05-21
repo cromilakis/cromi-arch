@@ -112,11 +112,12 @@ Solo para si algún test rompe o la cobertura baja.
 
 ## Fase 9 — PR y Vercel Preview
 
-1. Abrir PR referenciando el issue (`Closes #NNN`)
-2. Vercel genera preview automático
-3. El agente reporta: *"PR abierto: [URL]. Preview: [URL Vercel]. ¿Lo revisas y hacemos merge?"*
+1. El agente abre el PR referenciando el issue: `gh pr create ... --body "Closes #NNN"`
+2. CI corre automáticamente sobre el PR
+3. Vercel genera el Preview automáticamente
+4. El agente reporta: *"PR #NNN abierto. CI: ✅. Preview: [URL Vercel]. Revisa el fix y dime si integro a main o lo haces tú."*
 
-**Gate siempre-stop:** el humano revisa el preview y aprueba el merge.
+**Gate siempre-stop:** el humano revisa el preview. El merge lo hace en GitHub o le pide al agente que lo haga con `gh pr merge`. El merge a `main` dispara el deploy a producción en Vercel automáticamente.
 
 ---
 

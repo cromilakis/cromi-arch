@@ -145,7 +145,8 @@ En los gates condicionales, si todo está verde el agente avanza y notifica. El 
 
 ## Reglas del Harness
 
-1. Siempre escribe el Feature File Gherkin **ANTES** del código
+1. **Nunca** hacer push directo a `main` — todo cambio va por PR
+2. Siempre escribe el Feature File Gherkin **ANTES** del código
 2. Siempre verifica RED (steps fallan) antes de implementar
 3. Siempre corre regresión completa después de cada tarea
 4. Nunca implementes sin un feature file que lo especifique

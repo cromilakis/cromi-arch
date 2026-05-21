@@ -44,10 +44,32 @@ jobs:
 | Audit pasa | Sin vulnerabilidades high/critical |
 | Lighthouse pasa | Presupuesto de rendimiento respetado |
 
-## Deploy
+## Modelo de deploy — siempre vía PR
 
-- **Preview deploys**: automáticos por cada PR (Vercel)
-- **Producción**: squash merge a `main` → deploy automático
+**Nunca se hace push directo a `main`.** Todo cambio llega a producción a través de un PR.
+
+```
+rama feature/fix
+    ↓
+PR abierto → CI corre automáticamente → Vercel genera Preview
+    ↓
+Humano revisa el Preview (gate ✋)
+    ↓
+Merge a main (el humano lo hace en GitHub o le dice al agente que lo haga)
+    ↓
+Vercel detecta el merge → deploy a producción automático
+```
+
+El agente abre el PR y entrega las URLs. El merge lo ejecuta el humano — en GitHub directamente o indicándoselo al agente en el chat.
+
+```bash
+# El agente abre el PR así:
+gh pr create --title "feat: [descripción]" --body "Closes #NNN" --base main
+
+# Si el humano le pide hacer el merge:
+gh pr merge <número> --squash --delete-branch
+```
+
 - **Background jobs**: Vercel Cron
 
 ## Estrategia de Migraciones (zero-downtime)
@@ -91,8 +113,16 @@ Paso 3 — CONTRACT: Hacer NOT NULL / eliminar columna vieja.
 |---|---|
 | `.github/workflows/ci.yml` | Pipeline de CI/CD completo |
 
-## Gate Humano
+## Gate Humano — Siempre-stop
 
-> "Pipeline endurecido. Estrategia de migrations definida. ¿Procedemos a merge a main?"
+El agente abre el PR, CI corre, Vercel genera el Preview. Luego reporta:
 
-✅ Pipeline operativo y aprobado antes de pasar a Fase 10.
+> "PR #NNN abierto. CI: ✅. Preview: [URL Vercel]. Revisa el preview y dime si integro a main o lo haces tú en GitHub."
+
+El humano tiene dos opciones:
+- **Merge manual**: lo hace directamente en GitHub
+- **Merge vía agente**: le dice *"integra el PR"* y el agente corre `gh pr merge`
+
+En ambos casos el merge a `main` dispara el deploy a producción automáticamente en Vercel.
+
+✅ Gate aprobado → Fase 10.
