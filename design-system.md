@@ -2,8 +2,6 @@
 
 > ⚠️ **Regla Zero Raw HTML**: Todo elemento de UI debe ser un componente. Ver [Estándares de Diseño](/estandares-diseno.md#regla-fundamental-zero-raw-html) para las reglas completas.
 
-> INVESTIGADO: shadcn/ui docs oficiales (ui.shadcn.com), Tailwind CSS v4 docs, Radix UI.
-
 ## shadcn/ui como librería base
 
 shadcn/ui no es un paquete npm tradicional — se instala vía CLI y copia los componentes directamente en tu proyecto. Esto te da control total sobre el código.
@@ -144,3 +142,10 @@ components/
 ```
 
 Para customizar un componente de shadcn, edita directamente el archivo en `components/ui/`. Ejemplo: cambiar el `variant` del botón agregando un nuevo estilo.
+
+## Referencias
+
+- [Estándares de Diseño](/estandares-diseno.md) — regla Zero Raw HTML y principios de diseño
+- [Component Patterns](/component-patterns.md) — patrones de estados de página usando este design system
+- [Animaciones](/animaciones.md) — micro-interacciones con Motion integradas en componentes shadcn/ui
+- [i18n](/i18n.md) — el componente Typography integra traducciones con `next-intl`

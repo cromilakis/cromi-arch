@@ -1,7 +1,5 @@
 # Patrones de Componentes y Estados de Página
 
-> INVESTIGADO: Page states patterns, loading skeleton UX, responsive navigation patterns.
-
 Toda página debe cubrir 5 estados. Aquí están los patrones con código práctico.
 
 ## Loading — Skeleton loaders
@@ -20,6 +18,8 @@ export function SkeletonCard() {
 ```
 
 ## Empty — Sin datos
+
+> **Regla Zero Raw HTML**: `EmptyState` y `ErrorState` deben usar `<Typography />` y `<Button />` de shadcn/ui en lugar de `<h3>`, `<p>` y `<button>` raw. Ver [Estándares de Diseño](/estandares-diseno.md).
 
 ```tsx
 // components/features/EmptyState.tsx
@@ -138,3 +138,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 ```
 
 **Breakpoints:** `sm:640px`, `md:768px`, `lg:1024px`, `xl:1280px`. Siempre diseña para mobile primero y agrega variantes `sm:`, `md:`, etc.
+
+## Referencias
+
+- [Estándares de Diseño](/estandares-diseno.md) — regla Zero Raw HTML: usar `<Typography />` y `<Button />` de shadcn/ui
+- [Error Handling](/error-handling.md) — `ErrorState` se usa como fallback en Error Boundary (Capa 4)
+- [Animaciones](/animaciones.md) — añadir animaciones de entrada a `EmptyState` y `SkeletonCard`
+- [Errores al Usuario](/errores-usuario.md) — mapeo de errores técnicos a mensajes amigables para `ErrorState`

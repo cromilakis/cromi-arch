@@ -1,7 +1,5 @@
 # Entorno de Desarrollo Local
 
-> INVESTIGADO: Node.js LTS schedule, Docker Compose v2 syntax, Prisma ORM docs.
-
 Guía para levantar el proyecto en local.
 
 ## Prerrequisitos
@@ -118,3 +116,10 @@ SENTRY_DSN=""
 - **Puerto 5432 ocupado:** `sudo lsof -i :5432` para ver qué proceso lo usa
 - **Migraciones fallan:** borra el volumen `docker compose down -v` y corre `db:migrate` de nuevo
 - **Errores de tipado:** corre `pnpm type-check` para diagnosticar
+
+## Referencias
+
+- [Migraciones](/migrations.md) — estrategia expand-contract y cómo aplicar migraciones localmente
+- [Estrategia .env](/decisiones/env-strategy.md) — jerarquía de archivos `.env` por entorno
+- [Testing](/testing.md) — setup de base de datos SQLite para tests
+- [Fase 1 — Setup Inicial](/fases/fase-1-setup.md) — pasos de inicialización del proyecto

@@ -1,7 +1,5 @@
 # Feature Flags
 
-> INVESTIGADO: PostHog flag evaluation docs, feature flag patterns sin servicios externos.
-
 ## 1. Implementación sin servicios externos
 
 ```tsx
@@ -84,3 +82,9 @@ Cuando una funcionalidad está 100% liberada:
 # Script de limpieza
 npx ts-node scripts/limpiar-flags.ts --flag=FLAG_OLD_DASHBOARD
 ```
+
+## Referencias
+
+- [Analítica](/analytics.md) — combinar feature flags con eventos analíticos para medir adopción
+- [Estrategia .env](/decisiones/env-strategy.md) — flags de entorno (`FEATURE_X=true`) para activación por entorno
+- [Testing](/testing.md) — testear ambas ramas (flag ON / OFF) con BDD

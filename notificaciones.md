@@ -1,7 +1,5 @@
 # Estrategia de Notificaciones
 
-> INVESTIGADO: shadcn/ui toast patterns, Resend API docs, Web Push API.
-
 ## 1. Notificaciones en la aplicación
 
 ### Toast
@@ -84,11 +82,21 @@ Evitar saturar al usuario con notificaciones repetitivas.
 | Toast | 1 cada 2s | Por sesión |
 
 ```tsx
-import { rateLimit } from '@/lib/rate-limit';
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
-const { success } = await rateLimit.limit(
-  `notif:${usuarioId}:${tipo}`,
-  { limit: 5, duration: 3600 }
-);
+const emailNotifLimiter = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '1 h'),
+});
+
+const { success } = await emailNotifLimiter.limit(`notif:email:${usuarioId}`);
 if (!success) return; // Saltar notificación
 ```
+
+## Referencias
+
+- [Decisión: Rate Limiting](/decisiones/rate-limiting.md) — patrón Upstash `Ratelimit.slidingWindow` y helper `rateLimitCheck`
+- [Background Jobs](/background-jobs.md) — los jobs de email usan el mismo logger centralizado
+- [Logging](/logging.md) — loggear envíos fallidos de email con Pino
+- [Estrategia .env](/decisiones/env-strategy.md) — `RESEND_API_KEY`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`

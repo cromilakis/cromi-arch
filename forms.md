@@ -1,7 +1,5 @@
 # Form Handling con React Hook Form + Zod
 
-> INVESTIGADO: react-hook-form.com/docs, zod.dev, @hookform/resolvers.
-
 Patrón unificado para formularios con validación compartida entre cliente y servidor.
 
 React Hook Form v7 usa componentes no controlados para mejor performance. Soporta `Controller` para inputs controlados (shadcn/ui, MUI) y validación schema con Zod.
@@ -27,9 +25,13 @@ export type RegisterInput = z.infer<typeof registerSchema>;
 
 ## Componente InputField reutilizable
 
+> **Regla Zero Raw HTML**: `InputField` debe usar componentes de shadcn/ui (`<Label />`, `<Input />`) en lugar de `<label>` e `<input>` raw. Ver [Estándares de Diseño](/estandares-diseno.md).
+
 ```typescript
 // src/components/ui/input-field.tsx
 import { type UseFormRegisterReturn } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface Props {
   label: string;
@@ -41,15 +43,13 @@ interface Props {
 export function InputField({ label, error, type = 'text', registration }: Props) {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">{label}</label>
-      <input
+      <Label className="text-sm font-medium">{label}</Label>
+      <Input
         type={type}
         {...registration}
-        className={`border rounded px-3 py-2 ${
-          error ? 'border-red-500' : 'border-gray-300'
-        }`}
+        className={error ? 'border-destructive' : ''}
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
 }
@@ -76,7 +76,7 @@ async function submitRegister(data: RegisterInput) {
   });
   if (!res.ok) {
     const err = await res.json();
-    throw new Error(err.message ?? 'Error al registrarse');
+    throw new Error(err.error ?? 'Error al registrarse');
   }
   return res.json();
 }
@@ -150,7 +150,7 @@ export async function POST(req: Request) {
     const parsed = registerSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
-        { message: 'Datos inválidos', errors: parsed.error.flatten().fieldErrors },
+        { error: 'Datos inválidos', code: 'VALIDATION_ERROR', details: parsed.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
@@ -160,7 +160,7 @@ export async function POST(req: Request) {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
       return NextResponse.json(
-        { message: 'El email ya está registrado' },
+        { error: 'El email ya está registrado', code: 'CONFLICT' },
         { status: 409 }
       );
     }
@@ -174,7 +174,7 @@ export async function POST(req: Request) {
   } catch (error) {
     logger.error('Register error', error as Error);
     return NextResponse.json(
-      { message: 'Error interno del servidor' },
+      { error: 'Error interno del servidor', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }
@@ -267,3 +267,10 @@ export function RegisterForm() {
 3. **Server validation** con `safeParse` en Server Action / API Route
 4. **Controller** para inputs controlados (shadcn/ui)
 5. **Error handling** unificado: muestra errores del servidor en el formulario
+
+## Referencias
+
+- [Error Handling](/error-handling.md) — formato de respuesta de error plano `{ error, code, details? }` (Capa 1 y 2)
+- [Estándares de Diseño](/estandares-diseno.md) — regla Zero Raw HTML: usar `<Label />`, `<Input />` de shadcn/ui
+- [API Docs](/api-docs.md) — formato de respuesta de errores de validación
+- [Testing](/testing.md) — los formularios deben tener tests BDD que cubran validación y errores de servidor

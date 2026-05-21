@@ -90,12 +90,12 @@ Uso:
 | **Iconos** | Lucide React | Iconos consistentes, tree-shakeable |
 | **Fuentes** | Inter (texto), JetBrains Mono (código) | Legibilidad, rendimiento |
 | **Modo oscuro** | next-themes | Tema claro/oscuro sin flickering |
-| **Animaciones** | Tailwind animations + Framer Motion | Micro-interacciones |
+| **Animaciones** | Tailwind animations + Motion | Micro-interacciones |
 | **Formularios** | React Hook Form + Zod + shadcn/ui | UI consistente con validación |
 
 ## Principios del diseño
 
-1. **Utility-first con tokens**: los estilos se definen en `tailwind.config.ts` y se usan como clases, nunca CSS custom
+1. **Utility-first con tokens**: los estilos se definen en `globals.css` con `@theme` (Tailwind v4 CSS-first) y se usan como clases, nunca CSS custom
 2. **Componentes atómicos en shadcn/ui**: botones, inputs, modales vienen de shadcn, se customizan via CSS variables
 3. **Feature components sobre shadcn**: los componentes de negocio usan shadcn por debajo pero encapsulan lógica
 4. **Mobile-first responsive**: breakpoints de Tailwind, navegación adaptable
@@ -104,60 +104,33 @@ Uso:
 
 ## Design Tokens (CSS Variables)
 
-Los tokens se definen en `globals.css` y se consumen desde Tailwind:
+Tailwind CSS v4 es **CSS-first**: los tokens se definen directamente en `globals.css` con `@theme`, sin necesidad de `tailwind.config.ts` para tokens de diseño. Las clases `bg-primary`, `text-foreground`, etc. se generan automáticamente a partir del bloque `@theme`.
 
 ```css
-/* globals.css - tokens globales */
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --radius: 0.5rem;
-  }
+/* app/globals.css */
+@import "tailwindcss";
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-  }
+@theme {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(222.2 84% 4.9%);
+  --color-primary: hsl(221.2 83.2% 53.3%);
+  --color-primary-foreground: hsl(210 40% 98%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --radius: 0.5rem;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Modo oscuro via clase .dark */
+.dark {
+  --color-background: hsl(222.2 84% 4.9%);
+  --color-foreground: hsl(210 40% 98%);
+  --color-primary: hsl(217.2 91.2% 59.8%);
 }
 ```
 
-Y se mapean en `tailwind.config.ts`:
-
-```ts
-// tailwind.config.ts
-export default {
-  theme: {
-    extend: {
-      colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-    },
-  },
-}
-```
+Con este bloque, Tailwind genera automáticamente `bg-background`, `text-foreground`, `bg-primary`, `font-sans`, etc. No se necesita `tailwind.config.ts` para tokens de diseño.
 
 ## Escala de espaciado y tipografía
 
@@ -266,3 +239,12 @@ function ProductList({ initialData }: { initialData: Product[] }) {
 | Dark mode automático | next-themes + CSS variables en `globals.css`. No usar `dark:` manual |
 | Responsive mobile-first | Construir para mobile primero, extend con `md:`, `lg:` |
 | Un componente por archivo | Export default, nombre = filename |
+
+## Referencias
+
+- [Design System](/design-system.md) — tokens de color y spacing definidos con `@theme`
+- [Component Patterns](/component-patterns.md) — patrones de componentes que aplican estas reglas
+- [Animaciones](/animaciones.md) — micro-interacciones con Motion (import desde `"motion/react"`)
+- [Formularios](/forms.md) — React Hook Form + Zod + shadcn/ui (aplica Zero Raw HTML)
+- [i18n](/i18n.md) — el componente Typography integra i18n para todo texto visible
+- [Error Handling](/error-handling.md) — la UI de respaldo en Error Boundary debe usar components del design system

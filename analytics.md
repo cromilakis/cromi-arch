@@ -1,7 +1,5 @@
 # Analítica de Usuarios
 
-> INVESTIGADO: PostHog self-hosted docs, privacy-first analytics patterns, event tracking best practices.
-
 ## 1. ¿Qué rastreamos?
 
 | Evento | Tipo | Descripción |
@@ -27,14 +25,14 @@ type Evento = {
 };
 
 export async function trackEvent(evento: Evento) {
-  // PostgreSQL
+  // PostgreSQL — pagina debe pasarse explícitamente (window no existe en servidor)
   await prisma.eventoAnalitica.create({
     data: {
       nombre: evento.nombre,
       usuarioId: evento.usuarioId,
       propiedades: evento.propiedades || {},
-      pagina: evento.pagina || window.location.pathname,
-      userAgent: navigator.userAgent,
+      pagina: evento.pagina,
+      userAgent: typeof window !== 'undefined' ? navigator.userAgent : undefined,
     },
   });
 
@@ -45,34 +43,28 @@ export async function trackEvent(evento: Evento) {
 }
 ```
 
-## 3. Event tracking con TanStack Query middleware
+## 3. Event tracking con TanStack Query
+
+En TanStack Query v5, `onSuccess` y `onError` se eliminaron de `useQuery` — se manejan en el componente con efectos:
 
 ```tsx
-// src/lib/query-middleware.ts
-import { QueryClient } from '@tanstack/react-query';
+// Envoltorio para rastrear queries (TanStack Query v5)
+import { useQuery, useEffect } from 'react';
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      meta: {
-        trackAnalytics: true,
-      },
-    },
-  },
-});
+export function useTrackedQuery(key: string, options: object) {
+  const query = useQuery({ queryKey: [key], ...options });
 
-// Envoltorio para rastrear queries
-export function useTrackedQuery(key: string, options: any) {
-  return useQuery({
-    queryKey: [key],
-    ...options,
-    onSuccess: (data: any) => {
-      trackEvent({ nombre: `query_${key}_success` });
-    },
-    onError: (error: Error) => {
-      trackEvent({ nombre: `query_${key}_error`, propiedades: { error: error.message } });
-    },
-  });
+  useEffect(() => {
+    if (query.isSuccess) trackEvent({ nombre: `query_${key}_success` });
+  }, [query.isSuccess, key]);
+
+  useEffect(() => {
+    if (query.isError && query.error instanceof Error) {
+      trackEvent({ nombre: `query_${key}_error`, propiedades: { error: query.error.message } });
+    }
+  }, [query.isError, key, query.error]);
+
+  return query;
 }
 ```
 
@@ -113,3 +105,10 @@ El dashboard de analítica se sirve en `/admin/analytics` y muestra:
 - Features más usadas
 - Tiempo promedio por sesión
 - Embudos de conversión (funnels)
+
+## Referencias
+
+- [Logging](/logging.md) — Pino para logs técnicos; analítica para métricas de negocio
+- [Sentry](/sentry.md) — Sentry captura errores; analítica captura comportamiento de usuario
+- [Feature Flags](/feature-flags.md) — combinar eventos analíticos con flags para medir adopción de features
+- [Estrategia .env](/decisiones/env-strategy.md) — `POSTHOG_API_KEY`, `NEXT_PUBLIC_POSTHOG_KEY`

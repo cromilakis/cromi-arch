@@ -1,7 +1,5 @@
 # Animaciones y Micro-interacciones
 
-> INVESTIGADO: Motion (framer-motion) docs oficiales (motion.dev), Tailwind CSS v4 animation utilities.
-
 ## Motion (antes Framer Motion)
 
 Motion es la biblioteca de animación para React (antes llamada Framer Motion). Usa un motor híbrido que corre animaciones nativamente con Web Animations API y fallback a JavaScript para spring physics.
@@ -45,7 +43,7 @@ Las utilidades `transition-all`, `duration-300` y `ease-in-out` cubren el 90% de
 ```tsx
 // components/features/PageFadeIn.tsx
 "use client";
-import { motion } from "framer-motion"; // o "motion/react"
+import { motion } from "motion/react";
 
 export function PageFadeIn({ children }: { children: React.ReactNode }) {
   return (
@@ -113,7 +111,7 @@ Motion soporta animaciones activadas por scroll con `whileInView`:
 ```tsx
 // app/layout.tsx
 "use client";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -164,10 +162,6 @@ Motion detecta cambios de layout y anima transiciones suavemente:
 **Animamos en:** hover, focus, entrada de página, reordenamiento de listas, feedback de acciones (like, delete), scroll-triggered.
 
 **NO animamos en:** producción si el usuario prefiere `prefers-reduced-motion`.
-
-```tsx
-// Respetar preferencias del usuario con CSS global
-```
 
 ```css
 /* app/globals.css */
@@ -223,3 +217,10 @@ Usa `animate-spin` para loaders circulares, `animate-pulse` para skeletons, y `a
 3. Evita animar `width`, `height`, `top`, `left` — usa `scale` y `translate`
 4. En listas largas, usa `layout` solo donde sea necesario
 5. Para animaciones simples, prefiere CSS transitions sobre Motion
+
+## Referencias
+
+- [Design System](/design-system.md) — tokens de color y spacing usados en animaciones de UI
+- [Estándares de Diseño](/estandares-diseno.md) — regla Zero Raw HTML; usar componentes del design system en fallbacks
+- [Performance Budget](/performance-budget.md) — las animaciones con `layout` en listas largas pueden impactar CLS
+- [Component Patterns](/component-patterns.md) — patrones de componentes que usan animaciones de entrada/salida

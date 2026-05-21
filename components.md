@@ -1,7 +1,5 @@
 # Arquitectura de Componentes
 
-> INVESTIGADO: Next.js Server/Client Components docs, feature-based architecture patterns.
-
 > Este documento define cómo organizamos y construimos componentes en Next.js App Router.
 
 ## Feature-based Organization
@@ -80,3 +78,10 @@ export default async function Page({ params }) {
 - **Data Fetching:** Server Components + TanStack Query para revalidación.
 - **Formularios:** React Hook Form + Zod schema en Server Actions.
 - **Estado global:** Zustand para UI state (theme, sidebar), TanStack Query para server state.
+
+## Referencias
+
+- [Design System](/design-system.md) — shadcn/ui y Tailwind v4 usados en todos los componentes
+- [Estándares de Diseño](/estandares-diseno.md) — regla Zero Raw HTML y estructura de carpetas
+- [Component Patterns](/component-patterns.md) — patrones de los 5 estados de página
+- [Formularios](/forms.md) — patrón React Hook Form + Zod para componentes de formulario

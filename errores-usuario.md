@@ -1,7 +1,5 @@
 # Mensajes de Error para el Usuario
 
-> INVESTIGADO: Error message UX patterns, i18n integration, toast/snackbar best practices.
-
 ## 1. Mapeo de errores técnicos a mensajes amigables
 
 ```tsx
@@ -49,6 +47,8 @@ const ERROR_FALLBACK = {
 
 ## 3. Componente de Error Message
 
+> **Regla Zero Raw HTML**: `ErrorMessage` debe usar `<Typography />` y `<Button />` de shadcn/ui. Ver [Estándares de Diseño](/estandares-diseno.md).
+
 ```tsx
 // src/components/ui/error-message.tsx
 interface ErrorMessageProps {
@@ -84,8 +84,7 @@ export function ErrorMessage({ error, onReintentar, variante = 'inline' }: Error
 ## 5. Buenas prácticas
 
 - **Nunca** mostrar stack traces o códigos de error internos al usuario
-- **Siempre** loguear el error completo en Sentry
-- Usar `console.error` + Sentry en desarrollo, solo Sentry en producción
+- **Siempre** loguear el error completo en Sentry y Pino (ver [Logging](/logging.md))
 - Incluir un botón de "Reintentar" para errores recuperables
 - Para errores de red: "No pudimos conectar con el servidor. Verifica tu conexión a internet."
 - Para errores de validación: el mensaje debe indicar exactamente qué campo corregir
@@ -97,3 +96,11 @@ export function ErrorMessage({ error, onReintentar, variante = 'inline' }: Error
   error={errores.email && 'El correo electrónico no tiene un formato válido'}
 />
 ```
+
+## Referencias
+
+- [Error Handling](/error-handling.md) — estrategia de 5 capas; esta capa es la presentación al usuario
+- [API Docs](/api-docs.md) — los códigos de error del API (`VALIDATION_ERROR`, `CONFLICT`, etc.) se mapean aquí
+- [Sentry](/sentry.md) — el error completo se envía a Sentry antes de mostrar el mensaje amigable
+- [Logging](/logging.md) — Pino registra el error técnico en el servidor
+- [Formularios](/forms.md) — los errores de formulario usan este mismo componente `ErrorMessage`

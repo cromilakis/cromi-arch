@@ -71,6 +71,8 @@ Implementamos circuit breaker para Stripe y Resend — servicios sin los cuales 
 
 ```typescript
 // lib/integrations/circuit-breaker.ts
+import { logger } from '@/lib/logger';
+
 type CircuitState = 'closed' | 'open' | 'half-open';
 
 class CircuitBreaker {
@@ -101,7 +103,7 @@ class CircuitBreaker {
       this.lastFailureTime = Date.now();
       if (this.failureCount >= this.threshold) {
         this.state = 'open';
-        console.error(`Circuit breaker OPEN for service`);
+        logger.error('Circuit breaker OPEN for service');
       }
       throw error;
     }
@@ -189,3 +191,11 @@ Alertas configuradas en Sentry:
 | > 10 fallos en 5 min (cualquier servicio) | Slack #ops | On-call investiga        |
 | Circuit breaker OPEN                   | PagerDuty  | Incidente crítico         |
 | Latencia P95 > 2x del timeout configurado | Slack #eng | Revisar rate limits      |
+
+## Referencias
+
+- [Sentry](/sentry.md) — `Sentry.captureException` para fallos de integración
+- [Logging](/logging.md) — usar logger de Pino en circuit breaker y reintentos (no `console.error`)
+- [Cache](/cache.md) — patrón Redis para cachear respuestas de APIs externas
+- [Background Jobs](/background-jobs.md) — las integraciones que pueden reintentar de forma diferida van en jobs
+- [Estrategia .env](/decisiones/env-strategy.md) — vars de servicios externos (`STRIPE_SECRET_KEY`, `RESEND_API_KEY`)
