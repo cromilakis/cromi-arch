@@ -115,6 +115,7 @@ flowchart TD
 | | |
 |---|---|
 | [📋 ADRs](decisiones/adrs.md) | Architecture Decision Records |
+| [🐙 GitHub](github.md) | Branches, commits convencionales, PRs, labels, merge strategy |
 | [📦 Dependencias](dependencies.md) | Inventario y criterios de selección |
 | [💰 Costos](costos.md) | Free tier y escalado estimado |
 | [🧠 Memoria Persistente](memoria.md) | pgvector, RAG, continuidad entre sesiones |
