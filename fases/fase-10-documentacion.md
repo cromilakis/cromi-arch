@@ -31,7 +31,7 @@ En Fase 10, por cada borrador de ADR existente:
 
 ## ADRs recomendados
 
-Los borradores deben existir desde las fases previas. Aquí se completan:
+Los borradores deben existir desde las fases previas. Aquí se completan. Ver template y ciclo de vida completo en [ADRs](/decisiones/adrs.md).
 
 ```
 docs/adr/
@@ -41,29 +41,6 @@ docs/adr/
 ├── adr-004-error-handling.md           ← borrador: Fase 3
 ├── adr-005-testing-strategy.md         ← borrador: Fase 3
 └── adr-006-migration-strategy.md       ← borrador: Fase 9
-```
-
-## Template de ADR
-
-```markdown
-# ADR-NNN: [Título de la decisión]
-
-**Estado:** Aceptada | En revisión | Deprecada
-**Fecha de decisión:** YYYY-MM-DD (cuando se tomó, no cuando se escribió)
-**Fase donde se tomó:** Fase N
-
-## Contexto
-¿Qué problema o pregunta forzó esta decisión?
-
-## Opciones consideradas
-1. Opción A — pros/cons
-2. Opción B — pros/cons
-
-## Decisión
-Se eligió [opción] porque [razón].
-
-## Consecuencias observadas (completar en Fase 10)
-¿Fue la decisión correcta? ¿Qué salió bien, qué salió mal?
 ```
 
 ## Gate Humano — Condicional
