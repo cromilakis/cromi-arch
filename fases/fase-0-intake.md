@@ -96,19 +96,83 @@ Si el agente puede inferir la respuesta con alta confianza desde el issue, el hi
 
 ---
 
+## Documentos vivos durante la clarificación
+
+Los documentos se actualizan **en tiempo real** a medida que el humano responde — no al final cuando todo está claro. Cada respuesta enriquece el documento inmediatamente.
+
+### Flujo de actualización
+
+```
+Agente lee issue
+    ↓
+Crea scope-initial.md con lo que puede inferir (supuestos marcados)
+    ↓
+Presenta primera ronda de preguntas
+    ↓
+Humano responde → agente actualiza scope-initial.md al instante
+    ↓
+Si quedan ambigüedades → segunda ronda de preguntas
+    ↓
+Humano responde → agente actualiza scope-initial.md al instante
+    ↓
+Scope completo → gate de aprobación
+```
+
+### Estructura de scope-initial.md
+
+```markdown
+# Scope: <título del issue>
+
+**Issue:** #NNN
+**Fecha:** YYYY-MM-DD
+**Estado:** En clarificación | Listo para aprobación
+
+## Alcance
+<se completa y refina con cada respuesta>
+
+## Criterios de éxito
+<se completa con cada respuesta>
+
+## Prioridad
+<Alta | Media | Baja — definida por el humano>
+
+## Supuestos
+<Lo que el agente infirió sin preguntar. El humano puede corregir en el gate.>
+- [ ] Supuesto 1: ...
+- [ ] Supuesto 2: ...
+
+## Restricciones y dependencias
+<se completa con cada respuesta>
+
+## Fuera de alcance
+<lo que explícitamente NO incluye este trabajo>
+```
+
+### Regla de actualización
+
+Cada vez que el humano responde una pregunta, el agente:
+1. Actualiza `scope-initial.md` con la nueva información
+2. Tacha el supuesto correspondiente si la respuesta lo confirma o corrige
+3. Indica qué sección actualizó: *"Actualizado: criterios de éxito y prioridad en scope-initial.md"*
+
+Al llegar al gate, el documento ya está completo — no hay trabajo de escritura pendiente.
+
+---
+
 ## Actividades
 
 1. Leer el issue o recibir la solicitud por chat
 2. Procesar imágenes adjuntas si las hay (protocolo de imágenes)
-3. Analizar el issue e identificar qué dimensiones son ambiguas
-4. Presentar clarificaciones con opciones (máximo 4 preguntas, formato con opciones + Other)
-5. Proponer alcance inicial documentado basado en las respuestas
+3. Crear `scope-initial.md` con lo inferido, supuestos marcados
+4. Presentar clarificaciones con opciones (máximo 4 preguntas por ronda)
+5. Actualizar `scope-initial.md` con cada respuesta del humano
+6. Repetir rondas hasta que no queden ambigüedades relevantes
 
 ## Artefactos
 
 | Archivo | Descripción |
 |---|---|
-| `.specify/scope-initial.md` | Alcance documentado con criterios de éxito y supuestos asumidos |
+| `.specify/scope-initial.md` | Alcance vivo — se actualiza en cada ronda de clarificación |
 
 ## Gate Humano
 
