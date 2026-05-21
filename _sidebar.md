@@ -17,9 +17,12 @@
   - [🐙 GitHub](/github.md)
   - [🚦 Rate Limiting](/decisiones/rate-limiting.md)
   - [🔐 Estrategia .env](/decisiones/env-strategy.md)
+  - [🔄 Rotación de Secretos](/secret-rotation.md)
   - [👁️ Code Review](/decisiones/code-review.md)
   - [📦 Semantic Versioning](/decisiones/semver.md)
 - **Infraestructura y Datos**
+  - [🔗 Connection Pooling](/connection-pooling.md)
+  - [⚡ Real-time](/realtime.md)
   - [🗄️ Migraciones DB](/migrations.md)
   - [📁 Subida de Archivos](/file-upload.md)
   - [🔍 Búsqueda](/busqueda.md)
@@ -32,7 +35,9 @@
   - [🖼️ Image Optimization](/image-optimization.md)
   - [📊 Performance Budget](/performance-budget.md)
 - **API y Seguridad**
+  - [🔏 Privacidad y GDPR](/privacy.md)
   - [📖 Documentación API](/api-docs.md)
+  - [🔢 API Versioning](/api-versioning.md)
   - [🔑 Manejo de Sesiones](/sesiones.md)
   - [📡 Webhooks](/webhooks.md)
   - [🌐 CORS](/cors.md)
@@ -44,6 +49,7 @@
   - [⚠️ Vulnerabilidades del Stack](/vulnerabilidades-stack.md)
   - [🔐 OWASP API Security](/owasp-api.md)
 - **Testing y Monitoreo**
+  - [🚨 Disaster Recovery](/disaster-recovery.md)
   - [🧪 Estrategia de Testing](/testing.md)
   - [⚡ Error Handling](/error-handling.md)
   - [📊 Sentry](/sentry.md)

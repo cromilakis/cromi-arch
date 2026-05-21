@@ -80,6 +80,7 @@ flowchart TD
 |---|---|
 | [📦 Stack Tecnológico](stack.md) | Next.js, TypeScript, Prisma, Auth.js, decisiones de stack |
 | [🗄️ Database Patterns](database-patterns.md) | Prisma, queries, relaciones, índices |
+| [🔗 Connection Pooling](connection-pooling.md) | Singleton, `connection_limit`, Prisma Accelerate, PgBouncer — evitar `too many connections` en serverless |
 | [🔄 Migraciones](migrations.md) | Estrategia expand-contract, zero-downtime |
 | [🌱 Data Seeding](data-seeding.md) | Seeds de desarrollo y testing |
 | [🗑️ Soft Delete](soft-delete.md) | Patrón de borrado lógico |
@@ -87,11 +88,14 @@ flowchart TD
 | [💾 Caché](cache.md) | Estrategias de caching por capa |
 | [🔍 Búsqueda](busqueda.md) | Full-text search, filtros |
 | [⚙️ Background Jobs](background-jobs.md) | Vercel Cron, colas de tareas |
+| [⚡ Real-time](realtime.md) | Polling, SSE y WebSockets — árbol de decisión y constraints de Vercel |
 
 ### Seguridad
 | | |
 |---|---|
+| [🔏 Privacidad y GDPR](privacy.md) | Derecho al olvido, exportación de datos, consentimiento, retención |
 | [🛡️ OWASP API](owasp-api.md) | Top 10 API Security, mitigaciones |
+| [🔄 Rotación de Secretos](secret-rotation.md) | Runbooks por secreto, crear-antes-de-revocar, emergencias, detección de leaks |
 | [🔒 Security Headers](security-headers.md) | CSP, HSTS, X-Frame-Options |
 | [🚦 Rate Limiting](decisiones/rate-limiting.md) | Umbrales por endpoint, estrategia |
 | [🧱 CORS](cors.md) | Configuración de orígenes permitidos |
@@ -107,9 +111,16 @@ flowchart TD
 | [💬 Errores de Usuario](errores-usuario.md) | Mapeo técnico → mensajes amigables |
 | [📊 Logging](logging.md) | Pino, logging estructurado JSON |
 | [📡 Monitoreo](sentry.md) | Sentry DSN, alertas, performance traces |
+| [🚨 Disaster Recovery](disaster-recovery.md) | RTO/RPO, backups, runbooks por escenario, post-mortem |
 | [❤️ Health Check](health-check.md) | Endpoint `/api/health`, umbrales |
 | [🚀 CI/CD](fases/fase-9-cicd.md) | GitHub Actions, Vercel, pipeline completo |
 | [📈 Performance Budget](performance-budget.md) | Lighthouse CI, umbrales por ruta |
+
+### API
+| | |
+|---|---|
+| [📖 Documentación API](api-docs.md) | Contract-first con Zod, OpenAPI 3.1, formato de respuesta estandarizado |
+| [🔢 API Versioning](api-versioning.md) | Cuándo versionar, URL versioning, deprecación con Sunset header, testing por versión |
 
 ### Decisiones y referencias
 | | |
