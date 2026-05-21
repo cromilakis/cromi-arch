@@ -94,3 +94,5 @@
 - [💰 Costos](/costos.md)
 - **Gobernanza**
   - [⚖️ Reglas del Agente](/reglas-agente.md)
+- **Paquete npm**
+  - [📦 Packaging kromi-arch](/packaging.md)

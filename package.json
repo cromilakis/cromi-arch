@@ -1,0 +1,37 @@
+{
+  "name": "kromi-arch",
+  "version": "0.1.0",
+  "description": "Engineering Playbook — Claude Code skills y metodología SDD+BDD para Next.js",
+  "bin": {
+    "kromi-arch": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "commands/",
+    "templates/CLAUDE.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "engineering-playbook",
+    "nextjs",
+    "sdd",
+    "bdd",
+    "kromi-arch"
+  ],
+  "author": "Isaias Peña Cromilakis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ipcromilakis/kromi-arch.git"
+  },
+  "scripts": {
+    "test:install": "node bin/cli.js install --local",
+    "test:uninstall": "node bin/cli.js uninstall --local",
+    "test:status": "node bin/cli.js status --local",
+    "pack:dry": "npm pack --dry-run"
+  }
+}

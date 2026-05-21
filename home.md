@@ -123,6 +123,12 @@ flowchart TD
 | [📖 Documentación API](api-docs.md) | Contract-first con Zod, OpenAPI 3.1, formato de respuesta estandarizado |
 | [🔢 API Versioning](api-versioning.md) | Cuándo versionar, URL versioning, deprecación con Sunset header, testing por versión |
 
+### Paquete npm
+
+| | |
+|---|---|
+| [📦 Packaging kromi-arch](packaging.md) | Por qué npm, cómo instalar/actualizar/desinstalar, estructura del CLI, versionado |
+
 ### Decisiones y referencias
 | | |
 |---|---|
