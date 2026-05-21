@@ -63,7 +63,9 @@ Este gate tiene dos momentos y **ambos son siempre-stop** (el agente no avanza s
 1. **Gate de diseño UX** *(solo si la feature tiene interfaz de usuario)*
    > "Diseño UX en `docs/ux/`. Checklist de 7 criterios: todos cumplidos. ¿Apruebas los flujos y pantallas?"
 
-2. **Gate de arquitectura técnica**
-   > "Arquitectura propuesta en `docs/architecture.md`. ¿Apruebas?"
+2. **Gate de arquitectura técnica** — Condicional
+   El playbook define los patrones (Prisma, Route Handlers, TanStack Query, Auth.js). Si la arquitectura los aplica sin desviarse, no hay decisión nueva.
+   - **Siguiendo patrones del playbook**: el agente avanza automáticamente: *"Arquitectura en `docs/architecture.md`. Aplica patrones establecidos sin desviaciones. Avanzando a Fase 4."*
+   - **Con desviación del playbook** *(nueva librería, patrón no definido, decisión de schema con consecuencias no obvias)*: el agente para y presenta opciones: *"Para [X] no hay un patrón definido en el playbook. Opciones: [A] / [B]. ¿Cuál prefieres?"*
 
-✅ Ambos aprobados antes de pasar a Fase 4. Para features puramente backend, solo aplica el gate de arquitectura.
+✅ Gate UX siempre-stop. Gate de arquitectura avanza automáticamente si sigue el playbook. Para features puramente backend, solo aplica el gate de arquitectura.

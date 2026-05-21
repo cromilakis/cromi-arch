@@ -138,8 +138,8 @@ flowchart TB
 
 | Tipo | Cuándo para | Fases |
 |---|---|---|
-| **Siempre-stop** | El agente siempre espera aprobación explícita | 0, 1, 3 (UX + arq), 9 |
-| **Condicional** | Para solo si hay bloqueo, hallazgo o decisión que el agente no puede tomar solo | 2, 4, 5, 6, 7, 8, 10 |
+| **Siempre-stop** | El agente siempre espera aprobación explícita | 0, 3 (solo UX), 9 |
+| **Condicional** | Para solo si hay bloqueo, hallazgo o decisión que el agente no puede tomar solo | 1, 2, 3 (arquitectura), 4, 5, 6, 7, 8, 10 |
 
 En los gates condicionales, si todo está verde el agente avanza y notifica. El humano solo es interrumpido cuando hay algo que decidir.
 

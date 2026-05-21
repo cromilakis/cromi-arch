@@ -18,8 +18,9 @@
 |---|---|
 | `specs/NNN-feature/spec.md` | Especificación formal de la feature |
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Spec generado en specs/NNN-feature/spec.md. ¿Apruebas, modificamos, o iteramos?"
+El spec formaliza el scope aprobado en Fase 0. Si no agrega información nueva, no hay decisión que tomar.
 
-✅ El humano revisa y aprueba el spec antes de pasar a Fase 2.
+- **Spec sin ambigüedades** *(no contiene `[NEEDS CLARIFICATION]`, cubre todos los criterios de éxito del scope)*: el agente avanza automáticamente: *"Spec generado en `specs/NNN-feature/spec.md`. Formaliza el scope aprobado sin nuevas preguntas. Avanzando a Fase 2."*
+- **Spec con ambigüedades** *(contiene `[NEEDS CLARIFICATION]` o revela edge cases no cubiertos en el scope)*: el agente para y presenta las preguntas con opciones siguiendo el protocolo de Fase 0: *"El spec revela [N] puntos sin definir en el scope. ¿Cómo los resolvemos?"*
