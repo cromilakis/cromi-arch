@@ -163,6 +163,21 @@ git push --tags     # sube el tag al repo
 
 ---
 
+## Idioma de los artefactos
+
+El repo maneja dos idiomas con propósitos distintos:
+
+| Artefacto | Idioma | Razón |
+|-----------|--------|-------|
+| `*.md` documentación del playbook | Español | Escrita para el desarrollador humano |
+| `commands/karch-*.md` skills | **Inglés** | Instrucciones para Claude — mayor precisión técnica y alineación con cómo el modelo procesa instrucciones |
+| `templates/CLAUDE.md` | **Inglés** | Contexto permanente para Claude |
+| `packaging.md`, `bin/` outputs | Español | UX e información para el desarrollador |
+
+**Regla:** todo artefacto que Claude lee y ejecuta se escribe en inglés. Todo artefacto que el desarrollador humano lee se escribe en español. La línea divisoria es el consumidor del artefacto.
+
+---
+
 ## Relación entre docs y skills
 
 Los skills en `commands/` son **autocontenidos** — no dependen de que el usuario tenga acceso al repo de kromi-arch en runtime. El flujo de mantenimiento es:
