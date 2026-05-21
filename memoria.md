@@ -158,3 +158,10 @@ Tablas, índices, vistas, triggers y recuerdos iniciales (perfil + stack) se cre
 
 - **Local**: $0 (PostgreSQL en localhost o Docker)
 - **Producción**: Supabase Pro ($25/mes) ya incluye pgvector activado
+
+## Referencias
+
+- [Database Patterns](/database-patterns.md) — índices y extensiones PostgreSQL (pgvector es una extensión)
+- [Costos](/costos.md) — Supabase Pro ($25/mes) cubre almacenamiento de embeddings
+- [Auditoria](/auditoria.md) — los recuerdos con PII deben seguir la misma política de retención
+- [Estrategia .env](/decisiones/env-strategy.md) — `MEMORIA_DB_URL` como variable de entorno separada

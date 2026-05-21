@@ -26,9 +26,9 @@ Estrategia **Free Tier First**: para apps piloto los free tiers alcanzan. Se esc
 | Vercel Pro | Builds concurrentes, +ancho banda | $20 |
 | Supabase Pro | 8GB DB, 250GB banda, 100K usuarios | $25 |
 | Resend Growth | 50K emails/mes | $20 |
-| Sentry Team | 50K eventos/mes | $26 |
+| Sentry Team | 50K eventos/mes | $20 |
 | Stripe | Solo comisión por transacción | variable |
-| **Total** | | **~$91/mes + fees** |
+| **Total** | | **~$85/mes + fees** |
 
 ---
 
@@ -38,8 +38,8 @@ Estrategia **Free Tier First**: para apps piloto los free tiers alcanzan. Se esc
 |----------|-----------|--------|
 | Vercel | 100GB ancho banda, 6000 min build/mes | Pro ($20) |
 | Supabase | 500MB DB, 1GB storage, 50K users | Pro ($25) |
-| Resend | 100 emails/día | Growth ($30) |
-| Sentry | 5000 eventos/mes | Team ($29) |
+| Resend | 100 emails/día | Growth ($20) |
+| Sentry | 5000 eventos/mes | Team ($20) |
 | Stripe | Sin cargo fijo, solo comisión | Por transacción |
 | GitHub Actions | 2000 min/mes gratis | -- |
 
@@ -60,3 +60,10 @@ Estrategia **Free Tier First**: para apps piloto los free tiers alcanzan. Se esc
 | Schema (DDL) | Prisma migrations en git | ∞ (historial git) |
 | Archivos | Supabase Storage redundante | ∞ |
 | Extra (opcional) | pg_dump → R2 / GitHub Releases | Configurable |
+
+## Referencias
+
+- [Migraciones](/migrations.md) — el schema versionado en git es parte de la estrategia de backup
+- [Estrategia .env](/decisiones/env-strategy.md) — variables de Supabase, Resend, Sentry, Stripe por entorno
+- [Fase 9 — CI/CD](/fases/fase-9-cicd.md) — GitHub Actions consume los 2000 min/mes del free tier
+- [Sentry](/sentry.md) — configuración del plan free (5000 eventos) y cuándo escalar a Team

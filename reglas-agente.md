@@ -13,7 +13,7 @@ Estas reglas están almacenadas en la base de memoria (`memoria_db`, tipo `decis
 | 5 | Nunca loggear passwords, tokens, PII ni secretos |
 | 6 | Nunca ejecutar `rm -rf`, `drop table`, `truncate` sin confirmación explícita |
 | 7 | Nunca hacer deploy a producción sin que el usuario pueda verificar |
-| 8 | Siempre usar `npm ci` en CI, nunca `npm install` |
+| 8 | Siempre usar `pnpm install --frozen-lockfile` en CI, nunca `pnpm install` sin el flag |
 
 ## ✅ Calidad
 
@@ -61,3 +61,11 @@ Estas reglas están almacenadas en la base de memoria (`memoria_db`, tipo `decis
 ---
 
 *Estas reglas son fundacionales (importancia 5). Modificarlas requiere aprobación del usuario.*
+
+## Referencias
+
+- [Memoria Persistente](/memoria.md) — las reglas se almacenan en `memoria_db` con `importancia=5`
+- [Decisión: Code Review](/decisiones/code-review.md) — las reglas de Calidad #3 y #4 se aplican en el proceso de PR
+- [Logging](/logging.md) — Seguridad #5 (nunca loggear PII/secretos) está implementado con `redact` en Pino
+- [Migraciones](/migrations.md) — Seguridad #3 (no modificar DB sin backup) operacionalizado en expand-contract
+- [Templates: Security Checklist](/templates/security-checklist.md) — checklist completo que extiende las reglas de Seguridad
