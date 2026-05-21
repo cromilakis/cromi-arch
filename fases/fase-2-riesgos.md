@@ -16,8 +16,11 @@
 | `docs/threat-model.md` | Análisis de amenazas y mitigaciones |
 | `docs/data-analysis.md` | Modelo de datos, índices, análisis de rendimiento |
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Análisis de riesgos completado en docs/threat-model.md y docs/data-analysis.md. ¿Apruebas?"
+El agente evalúa si hay blockers antes de decidir si parar:
 
-✅ El humano aprueba el análisis antes de pasar a Fase 3.
+- **Sin blockers**: el agente avanza automáticamente a Fase 3 y notifica: *"Análisis de riesgos completado. Sin blockers. Avanzando a Fase 3 — revisa `docs/threat-model.md` cuando quieras."*
+- **Con blockers** *(riesgo alto sin mitigación clara, decisión de compliance, cambio de scope)*: el agente para y presenta el bloqueo: *"Bloqueo detectado en análisis de riesgos: [descripción]. ¿Cómo procedemos?"*
+
+Un bloqueo es un riesgo que **el agente no puede resolver solo** — requiere una decisión de negocio o contexto que solo el humano tiene.

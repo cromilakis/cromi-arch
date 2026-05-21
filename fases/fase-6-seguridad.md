@@ -24,8 +24,9 @@
 |---|---|
 | `docs/security-audit.md` | Reporte de auditoría de seguridad completo |
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Security audit en docs/security-audit.md. ¿Apruebas?"
+- **Todo verde** *(Semgrep 0 issues, `npm audit` sin high/critical, todos los controles aplicados)*: el agente avanza automáticamente: *"Seguridad: todo verde. 0 vulnerabilidades. Avanzando a Fase 7 — reporte completo en `docs/security-audit.md`."*
+- **Con hallazgos**: el agente para y presenta el reporte: *"Hallazgo de seguridad: [descripción + severidad]. Mitigación propuesta: [X]. ¿Apruebas o ajustamos?"*
 
-✅ El humano audita y aprueba antes de pasar a Fase 7.
+El humano no necesita revisar un checklist verde — solo se le interrumpe cuando hay algo que decidir.

@@ -9,9 +9,26 @@
 Antes de diseñar la arquitectura técnica, los flujos y pantallas deben estar acordados visualmente. Implementar sin diseño aprobado genera retrabajo en Fase 5.
 
 - Crear wireframes o mockups de las pantallas involucradas
-- Identificar flujos de usuario (happy path + edge cases)
-- Validar que los design tokens (colores, tipografía, espaciado) del sistema de diseño están definidos
-- Gate de diseño: el humano aprueba los wireframes/mockups **antes** de continuar con arquitectura técnica
+- Documentar el flujo de usuario: happy path + mínimo 2 edge cases
+- Definir los 5 estados de cada pantalla (loading, empty, error, success, edge case) — ver [`component-patterns.md`](/component-patterns.md)
+- Verificar que colores y tipografía usan tokens existentes — ver [`design-system.md`](/design-system.md)
+- Descomponer la pantalla en componentes: ninguno puede ser HTML crudo — ver [`estandares-diseno.md`](/estandares-diseno.md)
+- Indicar si cada componente es Server o Client Component — ver [`components.md`](/components.md)
+- Definir breakpoints responsive (mobile-first)
+
+#### Checklist de aprobación UX
+
+El gate de diseño solo procede si todo lo siguiente está definido:
+
+| # | Criterio | Referencia |
+|---|---|---|
+| 1 | Cada pantalla tiene los 5 estados diseñados (loading, empty, error, success, edge) | `component-patterns.md` |
+| 2 | Ningún elemento de UI es HTML crudo — todo es componente | `estandares-diseno.md` |
+| 3 | Colores y tipografía provienen de tokens existentes, sin hardcodear | `design-system.md` |
+| 4 | Flujo de usuario documentado: happy path + ≥ 2 edge cases | `docs/ux/user-flows.md` |
+| 5 | Cada componente tiene definido si es Server o Client Component | `components.md` |
+| 6 | Responsive: mobile-first, breakpoints `sm/md/lg` especificados | `estandares-diseno.md` |
+| 7 | Textos visibles usan claves i18n, no strings hardcodeados | `i18n.md` |
 
 ### Arquitectura técnica (después del diseño aprobado)
 
@@ -41,9 +58,12 @@ Antes de diseñar la arquitectura técnica, los flujos y pantallas deben estar a
 
 ## Gate Humano
 
-Este gate tiene dos momentos:
+Este gate tiene dos momentos y **ambos son siempre-stop** (el agente no avanza sin aprobación explícita):
 
-1. **Gate de diseño UX**: "Wireframes en docs/ux/. ¿Apruebas los flujos y pantallas antes de continuar?"
-2. **Gate de arquitectura técnica**: "Arquitectura propuesta en docs/architecture.md. ¿Apruebas?"
+1. **Gate de diseño UX** *(solo si la feature tiene interfaz de usuario)*
+   > "Diseño UX en `docs/ux/`. Checklist de 7 criterios: todos cumplidos. ¿Apruebas los flujos y pantallas?"
 
-✅ Ambos aprobados antes de pasar a Fase 4.
+2. **Gate de arquitectura técnica**
+   > "Arquitectura propuesta en `docs/architecture.md`. ¿Apruebas?"
+
+✅ Ambos aprobados antes de pasar a Fase 4. Para features puramente backend, solo aplica el gate de arquitectura.

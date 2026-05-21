@@ -89,8 +89,9 @@ test('health endpoint responde healthy', async ({ request }) => {
 | `coverage/` | Reporte de cobertura (HTML) |
 | `.lighthouse/` | Reportes de Lighthouse CI por ruta |
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Test results. Coverage: X%. Lighthouse: Performance X, a11y X. Health endpoint: OK. ¿Aprobado?"
+- **Todos los umbrales superados** *(coverage ≥ 80% lines / 70% branches, Lighthouse Performance ≥ 85, a11y ≥ 90, health endpoint OK, 0 tests fallidos)*: el agente avanza automáticamente: *"Testing: todo verde. Coverage: X%. Lighthouse: Performance X / a11y X. Avanzando a Fase 8."*
+- **Algún umbral no alcanzado**: el agente para y reporta: *"Coverage de branches en X% (mínimo 70%). Módulos sin cubrir: [lista]. ¿Ajustamos el umbral o agrego tests?"*
 
-✅ El humano revisa resultados antes de pasar a Fase 8.
+El humano solo interviene cuando hay un threshold roto o una decisión sobre si aceptar una excepción justificada.

@@ -18,8 +18,11 @@
 |---|---|
 | `specs/NNN-feature/tasks.md` | Lista de tareas con prioridad y dependencias |
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Tareas desglosadas en tasks.md. ¿En qué orden las ejecutamos?"
+El agente propone el orden de ejecución con justificación y avanza automáticamente salvo que haya una restricción que no pueda inferir:
 
-✅ El humano prioriza y ordena las tareas antes de pasar a Fase 5.
+- **Sin restricciones externas**: el agente ordena las tareas por dependencias técnicas, marca las paralelizables `[P]`, y avanza: *"Tareas ordenadas en `tasks.md`. Ejecutaré en el orden propuesto — avísame si tienes alguna restricción de prioridad."*
+- **Con ambigüedad de prioridad** *(dos tareas sin dependencia técnica entre sí y con impacto de negocio diferente)*: el agente para y pregunta: *"Las tareas T2 y T3 son independientes. ¿Cuál tiene más prioridad para ti?"*
+
+El humano no necesita ordenar las tareas — solo confirmar o ajustar si tiene contexto de negocio que el agente no tiene.

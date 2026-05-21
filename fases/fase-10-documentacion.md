@@ -66,8 +66,9 @@ Se eligió [opción] porque [razón].
 ¿Fue la decisión correcta? ¿Qué salió bien, qué salió mal?
 ```
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Documentación completa en docs/. ¿Revisas?"
+- **Documentación completa** *(todos los ADRs completados, README con setup funcional, runbook revisado)*: el agente avanza automáticamente y marca el ciclo como entregado: *"Documentación completa. ADRs publicados, README actualizado, runbook finalizado. Ciclo completado — issue cerrado."*
+- **Con gaps**: el agente para y reporta: *"ADR-003 sin campo 'Consecuencias observadas'. ¿Lo completo yo con lo que observé durante la implementación, o tienes contexto adicional?"*
 
-✅ El humano revisa la documentación antes de finalizar el ciclo.
+El cierre del ciclo es automático si todo está en orden. El humano solo interviene si hay un gap que requiere su perspectiva.

@@ -62,8 +62,9 @@ Documentar en `docs/runbook.md`:
 | `sentry.server.config.ts` | Configuración de Sentry para producción |
 | `sentry.client.config.ts` | Configuración de Sentry en cliente |
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Sentry conectado, alertas configuradas, runbook en docs/runbook.md. ¿Apruebas?"
+- **Configuración completa** *(Sentry DSN activo, alertas configuradas, runbook documentado)*: el agente avanza automáticamente: *"Monitoreo de producción listo. Sentry conectado, alertas activas, runbook en `docs/runbook.md`. Avanzando a Fase 9."*
+- **Con decisión pendiente** *(umbral de alertas ambiguo, canal de notificación no definido, escalación no especificada)*: el agente para y pregunta: *"¿A qué canal de Slack van las alertas críticas? ¿Quién es el responsable de escalar?"*
 
-✅ El humano aprueba antes de pasar a Fase 9.
+El humano no necesita revisar la configuración técnica — solo tomar decisiones operativas que requieren contexto de equipo.

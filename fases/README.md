@@ -123,6 +123,15 @@ flowchart TB
 | Monitoreo | Sentry + Pino |
 | Pre-commit | Husky + lint-staged + Semgrep |
 
+## Tipos de Gate
+
+| Tipo | Cuándo para | Fases |
+|---|---|---|
+| **Siempre-stop** | El agente siempre espera aprobación explícita | 0, 1, 3 (UX + arq), 5, 9 |
+| **Condicional** | Para solo si hay bloqueo, hallazgo o decisión que el agente no puede tomar solo | 2, 4, 6, 7, 8, 10 |
+
+En los gates condicionales, si todo está verde el agente avanza y notifica. El humano solo es interrumpido cuando hay algo que decidir.
+
 ## Reglas del Harness
 
 1. Siempre escribe el Feature File Gherkin **ANTES** del código
