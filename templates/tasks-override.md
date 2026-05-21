@@ -61,7 +61,7 @@ Esperado: ✅ PASS — todos los escenarios
 
 Luego corre regresión:
 ```bash
-npm test
+pnpm test
 ```
 
 **Paso 6 — REFACTOR**
@@ -84,3 +84,10 @@ git commit -m "feat: implementar [nombre de feature]"
 - Scenario Outline para tests parametrizados con tabla Examples
 - Background para contexto compartido
 - Un commit por tarea, mensaje conventional
+
+## Referencias
+
+- [AGENTS.md](/templates/AGENTS.md) — harness completo que usa estas tareas
+- [Feature Template](/templates/feature-template.md) — plantilla de archivos Gherkin + Step Definitions
+- [Testing](/testing.md) — configuración de Vitest y Playwright BDD
+- [Decisiones: Code Review](/decisiones/code-review.md) — proceso de PR y revisión

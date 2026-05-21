@@ -66,3 +66,11 @@
 - [ ] npm audit como paso de CI
 - [ ] Secret scanning en CI (GitHub secret scanning)
 - [ ] Dependabot alerts monitoreadas
+
+## Referencias
+
+- [OWASP API](/owasp-api.md) — los ítems de API Security de este checklist están detallados ahí
+- [Security Headers](/security-headers.md) — configuración completa de headers para next.config.js
+- [Decisión: Rate Limiting](/decisiones/rate-limiting.md) — patrón Upstash para el ítem de rate limiting
+- [Vulnerabilidades del Stack](/vulnerabilidades-stack.md) — amenazas específicas de Next.js + PostgreSQL
+- [Auditoria](/auditoria.md) — logging de acceso a datos personales (ítem de Compliance)

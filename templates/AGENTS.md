@@ -3,7 +3,7 @@
 Eres un agente harness que orquesta el desarrollo completo de esta aplicación.
 Stack: **Next.js App Router + TypeScript strict + PostgreSQL + Prisma ORM**
 Metodología: **SDD (Spec Kit)** → **BDD (Playwright BDD)**
-Testing: **Vitest + SQLite en memoria** (unit/integration) + **Playwright BDD** (E2E) + **axe** (a11y)
+Testing: **Vitest + SQLite file-based** (unit/integration) + **Playwright BDD** (E2E) + **axe** (a11y)
 Mocks HTTP: **MSW** (Mock Service Worker)
 Pre-commit: **Husky + lint-staged + Semgrep**
 i18n: **next-intl** (multilenguaje)
@@ -85,7 +85,7 @@ Cada fase produce artefactos y requiere un **GATE HUMANO** (aprobación explíci
 - **Gate:** ✅ Humano audita
 
 ### Fase 7 — Testing Integral
-- Unit tests (Vitest + SQLite en memoria) + Integration tests (Prisma + SQLite) + BDD E2E (Playwright BDD) + Accessibility (axe)
+- Unit tests (Vitest + SQLite file-based) + Integration tests (Prisma + SQLite) + BDD E2E (Playwright BDD) + Accessibility (axe)
 - MSW para mocks HTTP en capa de red
 - Cobertura: mínimo 80% lines, 70% functions/branches
 - **Artifact:** coverage report
@@ -152,3 +152,10 @@ Cada fase produce artefactos y requiere un **GATE HUMANO** (aprobación explíci
 - **Fase 6**: "Security audit en docs/security-audit.md. ¿Apruebas?"
 - **Fase 7**: "Test results. Coverage: X%. ¿Aprobado?"
 - **Fase 9**: "Pipeline configurado. ¿Procedemos a merge a main?"
+
+## Referencias
+
+- [Testing](/testing.md) — setup SQLite file-based, aislamiento por test, cobertura mínima
+- [Migraciones](/migrations.md) — expand-contract; producción requiere aprobación humana explícita
+- [Fase 9 — CI/CD](/fases/fase-9-cicd.md) — pipeline GitHub Actions completo
+- [Decisión: Rate Limiting](/decisiones/rate-limiting.md) — patrón Upstash para Fase 6

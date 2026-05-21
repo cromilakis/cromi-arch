@@ -16,18 +16,8 @@
 ## 2. Logging Estructurado (Pino)
 
 ### Configuración
-```typescript
-// src/lib/logger.ts
-import pino from 'pino';
 
-export const logger = pino({
-  level: process.env.LOG_LEVEL || 'info',
-  transport: process.env.NODE_ENV === 'development'
-    ? { target: 'pino-pretty' }
-    : undefined,
-  redact: ['req.headers.authorization', 'req.body.password'],
-});
-```
+Logger centralizado en `src/lib/logger.ts`. Ver [Logging](/logging.md) para la implementación completa con `redact`, `pino-pretty` en dev y `formatters`.
 
 ### Niveles
 - `fatal` — caída del sistema
@@ -47,24 +37,12 @@ export const logger = pino({
 ## 3. Health Checks
 
 ### Endpoint: `GET /api/health`
-```typescript
-// src/app/api/health/route.ts
-export async function GET() {
-  const checks = {
-    database: await checkDatabase(),
-    sentry: await checkSentry(),
-    uptime: process.uptime(),
-    memory: process.memoryUsage(),
-    timestamp: new Date().toISOString(),
-  };
-  const healthy = Object.values(checks).every(c => c.status === 'ok');
-  return Response.json(checks, { status: healthy ? 200 : 503 });
-}
-```
+
+Ver [Health Check](/health-check.md) para la implementación completa con `checkDatabase()`, `checkRedis()`, uptime y memoria.
 
 ### Qué verificar
 - [ ] Conexión a PostgreSQL (SELECT 1)
-- [ ] Sentry DSN reachable
+- [ ] Conexión a Redis (PING)
 - [ ] Disk space > 20% free
 - [ ] Connection pool usage < 80%
 
@@ -122,3 +100,11 @@ export async function GET() {
 | Acceso (Nginx) | 30 días | Log file |
 | Base de datos | 7 días | pg_stat_statements |
 | Auditoría | 1 año | Archivo separado |
+
+## Referencias
+
+- [Sentry](/sentry.md) — configuración, source maps, alertas y Error Boundaries
+- [Logging](/logging.md) — logger centralizado Pino con redact, levels y pino-pretty
+- [Health Check](/health-check.md) — implementación completa de `GET /api/health`
+- [Analítica](/analytics.md) — métricas de negocio (DAU/MAU, conversión, funnels)
+- [Performance Budget](/performance-budget.md) — targets de LCP, CLS y latencia p95

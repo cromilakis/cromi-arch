@@ -101,8 +101,13 @@ Feature: API de Usuarios
 import { createBdd } from 'playwright-bdd';
 import { test, expect } from '../../playwright/fixtures';
 import { seedUsers, cleanDB } from '../../test-utils/db';
+import type { APIResponse } from '@playwright/test';
 
 const { Given, When, Then } = createBdd(test);
+
+// Variables de módulo para compartir estado entre steps
+let response: APIResponse;
+let body: unknown;
 
 Given('la base de datos tiene los siguientes usuarios:', async (_, dataTable: any) => {
   await cleanDB();
@@ -110,18 +115,17 @@ Given('la base de datos tiene los siguientes usuarios:', async (_, dataTable: an
 });
 
 When('hago GET a {string}', async ({ request }, url: string) => {
-  const response = await request.get(url);
-  this.response = response;
-  this.body = await response.json();
+  response = await request.get(url);
+  body = await response.json();
 });
 
-Then('la respuesta es {int}', async function (statusCode: number) {
-  expect(this.response.status()).toBe(statusCode);
+Then('la respuesta es {int}', async (_, statusCode: number) => {
+  expect(response.status()).toBe(statusCode);
 });
 
-Then('el cuerpo contiene {int} usuarios', async function (count: number) {
-  expect(Array.isArray(this.body)).toBe(true);
-  expect(this.body.length).toBe(count);
+Then('el cuerpo contiene {int} usuarios', async (_, count: number) => {
+  expect(Array.isArray(body)).toBe(true);
+  expect((body as unknown[]).length).toBe(count);
 });
 ```
 
@@ -145,3 +149,9 @@ npx bddgen && npx playwright test --grep "Registro"
 # Modo UI interactivo
 npx bddgen && npx playwright test --ui
 ```
+
+## Referencias
+
+- [Tasks Override](/templates/tasks-override.md) — ciclo completo RED → GREEN → REFACTOR → commit
+- [Testing](/testing.md) — configuración de Playwright BDD, fixtures y cobertura mínima
+- [API Docs](/api-docs.md) — formato de respuesta `{ error, code }` para escenarios `@error` y `@validation`
