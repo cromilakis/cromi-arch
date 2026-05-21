@@ -31,7 +31,7 @@ flowchart TB
 
     subgraph F3 [Fase 3: Arquitectura]
         direction LR
-        A0["API + DB + UI"] --> A1["Contratos"]
+        A0["UX + Wireframes"] --> A01["API + DB + UI"] --> A1["Contratos + ADR borrador"]
     end
     F3 --> G3{"Gate Humano"}
     G3 -->|✅ Aprueba| F4
@@ -47,7 +47,7 @@ flowchart TB
 
     subgraph F5 [Fase 5: Implementación BDD]
         direction LR
-        B0["RED"] --> B1["GREEN"] --> B2["REFACTOR"]
+        B00["CI scaffold + health endpoint"] --> B0["RED"] --> B1["GREEN"] --> B2["REFACTOR"]
     end
     F5 --> G5{"Gate Humano"}
     G5 -->|✅ Aprueba| F6
@@ -63,7 +63,7 @@ flowchart TB
 
     subgraph F7 [Fase 7: Testing]
         direction LR
-        E0["Unit + E2E + a11y"] --> E1["Coverage"]
+        E0["Unit + E2E + a11y + Perf"] --> E1["Coverage + Lighthouse"]
     end
     F7 --> G7{"Gate Humano"}
     G7 -->|✅ Aprueba| F8
@@ -71,7 +71,7 @@ flowchart TB
 
     subgraph F8 [Fase 8: Monitoreo]
         direction LR
-        M0["Sentry + Pino"] --> M1["Health checks"]
+        M0["Sentry DSN + Alertas"] --> M1["Dashboard + Runbook"]
     end
     F8 --> G8{"Gate Humano"}
     G8 -->|✅ Aprueba| F9
@@ -79,7 +79,7 @@ flowchart TB
 
     subgraph F9 [Fase 9: CI/CD]
         direction LR
-        D0["GH Actions"] --> D1["Vercel deploy"]
+        D0["Pipeline endurecido"] --> D1["Deploy + Estrategia migrations"]
     end
     F9 --> G9{"Gate Humano"}
     G9 -->|✅ Aprueba| F10
@@ -87,7 +87,7 @@ flowchart TB
 
     subgraph F10 [Fase 10: Documentación]
         direction LR
-        L0["ADRs + README"] --> L1["Runbook"]
+        L0["ADRs completados + README"] --> L1["Runbook finalizado"]
     end
     F10 --> G10{"Gate Humano"}
     G10 -->|✅ Aprueba| DONE["🎉 Entregado"]
@@ -132,3 +132,23 @@ flowchart TB
 5. Nunca avances de fase sin aprobación humana explícita
 6. Commits convencionales: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`
 7. Un commit por tarea
+8. Las imágenes de GitHub Issues se descargan a `/tmp/issue-<número>/`, se leen, y se eliminan **en el mismo turno** — nunca quedan en el repo
+9. El CI scaffold (lint + build + tests básicos) debe estar corriendo **desde el primer commit de Fase 5**
+10. El health endpoint y logging base deben existir **antes del primer E2E**
+11. Los ADRs se crean como borradores **cuando se toma la decisión** (Fases 1-3), no al final
+12. Las migrations de producción **nunca** se ejecutan automáticamente — siempre requieren revisión humana
+
+## Nota sobre features grandes (mini-ciclos)
+
+Las fases son secuenciales por diseño, pero features de tamaño mediano-grande rara vez encajan en una sola pasada lineal. En esos casos, se recomienda iterar **Fases 3 → 4 → 5** en mini-ciclos por módulo:
+
+```
+Feature grande
+  ├── Módulo A: Fase 3 → 4 → 5 → gate
+  ├── Módulo B: Fase 3 → 4 → 5 → gate
+  └── Módulo C: Fase 3 → 4 → 5 → gate
+      ↓
+  Fases 6 → 7 → 8 → 9 → 10 (una sola vez sobre todo)
+```
+
+Las fases de seguridad, testing integral, monitoreo, CI/CD y documentación se ejecutan **una sola vez** sobre todos los módulos juntos, no por módulo.

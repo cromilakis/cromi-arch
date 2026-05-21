@@ -77,6 +77,45 @@ Then('ve un mensaje {string}', async ({ page }, mensaje) => {
 });
 ```
 
+## Prerequisito: CI scaffold antes de empezar
+
+Antes de escribir el primer Feature File, el pipeline básico de CI debe estar operativo. El objetivo es que cada commit tenga feedback inmediato y no acumular semanas de desarrollo sin barrera automatizada.
+
+```yaml
+# .github/workflows/ci.yml — scaffold mínimo al inicio de Fase 5
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npx vitest run   # sin coverage todavía — se exige en Fase 9
+```
+
+Este scaffold se irá endureciendo en Fase 9 (coverage, Semgrep, audit). Lo que no se hace al inicio es agregarlo al final.
+
+## Prerequisito: logging y health endpoint antes del primer E2E
+
+El endpoint `/api/health` y la configuración base de Pino deben estar en su lugar antes de correr los primeros tests E2E. Esto permite:
+- Que los tests puedan verificar que el servicio responde y está saludable
+- Que Fase 7 (testing) pueda incluir un test de smoke sobre el health endpoint
+- Que la configuración de Sentry en Fase 8 tenga ya el logging en su lugar
+
+```typescript
+// src/app/api/health/route.ts — crear en el primer commit de Fase 5
+export async function GET() {
+  const dbOk = await checkDatabaseConnection()
+  return Response.json({
+    status: dbOk ? 'healthy' : 'degraded',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  })
+}
+```
+
 ## Pasos por cada tarea
 
 1. Escribir Feature File (`.feature` en `features/`)
@@ -90,6 +129,6 @@ Then('ve un mensaje {string}', async ({ page }, mensaje) => {
 
 ## Gate Humano
 
-> "Implementación completa. ¿Revisas el PR/demo?"
+> "Implementación completa. CI scaffold verde. ¿Revisas el PR/demo?"
 
 ✅ El humano revisa y aprueba antes de pasar a Fase 6.
