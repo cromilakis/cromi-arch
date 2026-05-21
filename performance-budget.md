@@ -25,11 +25,13 @@ Usamos `@next/bundle-analyzer` para inspeccionar el tamaño de los bundles:
 
 ```typescript
 // next.config.ts
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-export default withBundleAnalyzer(nextConfig);
+export default bundleAnalyzer(nextConfig);
 ```
 
 Ejecutar:
@@ -139,11 +141,15 @@ Comandos útiles:
 
 ```bash
 # Ver tamaño de bundles
-npx next-bundle-visualizer
+ANALYZE=true npm run build
 
 # Simular Lighthouse local
 npx lighthouse http://localhost:3000 --view
-
-# Medir FCP/LCP desde CLI
-npx sitespeed.io http://localhost:3000 --plugins.add analysisSticky
 ```
+
+## Referencias
+
+- [Sentry](/sentry.md) — métricas de latencia API y alertas de performance en producción
+- [Optimización de Imágenes](/image-optimization.md) — LCP y CLS impactados directamente por imágenes
+- [Caché](/cache.md) — estrategias para cumplir los targets de latencia API
+- [Fase 9 — CI/CD](/fases/fase-9-cicd.md) — Lighthouse CI como gate obligatorio en el pipeline

@@ -82,8 +82,8 @@ Cuando TanStack Query no es suficiente (datos compartidos entre usuarios):
 import { Redis } from '@upstash/redis';
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_URL!,
-  token: process.env.UPSTASH_REDIS_TOKEN!,
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 });
 
 export async function getCachedProduct(slug: string) {
@@ -104,3 +104,10 @@ export async function getCachedProduct(slug: string) {
 | Admin crea producto | Revalidar ISR: `revalidatePath('/productos')` |
 | Stripe webhook (pago) | Invalidar suscripción en caché de Redis |
 | Despliegue | CDN cache purged automáticamente por Vercel |
+
+## Referencias
+
+- [Rate Limiting](/decisiones/rate-limiting.md) — comparte la instancia Upstash Redis
+- [Estrategia .env](/decisiones/env-strategy.md) — variables `UPSTASH_REDIS_REST_URL/TOKEN`
+- [Performance Budget](/performance-budget.md) — caching como herramienta para cumplir los targets de latencia
+- [Error Handling](/error-handling.md) — manejar fallos de caché (Redis caído) sin romper la app

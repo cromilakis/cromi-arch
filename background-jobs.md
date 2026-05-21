@@ -96,7 +96,7 @@ async function processWithBackoff<T>(
 ```typescript
 // lib/job-monitor.ts
 import { pino } from 'pino';
-import { Sentry } from './sentry';
+import * as Sentry from '@sentry/nextjs';
 
 const logger = pino({ name: 'background-jobs' });
 
@@ -122,3 +122,18 @@ export async function trackJob(name: string, fn: () => Promise<void>) {
 | Generar reporte mensual | Inngest (schedule) | Mensual |
 | Sincronizar datos con Stripe | Upstash QStash | Cada hora |
 | Enviar notificaciones push | Inngest (batch) | Cada 5 min |
+
+## Variables de entorno
+
+```
+CRON_SECRET=generate-with-openssl-rand-base64-32
+```
+
+Agregar a `.env.example`. Ver [Estrategia .env](/decisiones/env-strategy.md) para convenciones de nomenclatura.
+
+## Referencias
+
+- [Sentry](/sentry.md) — monitoreo de jobs fallidos con alertas
+- [Soft Delete](/soft-delete.md) — el cron de limpieza de registros borrados lógicamente
+- [Rate Limiting](/decisiones/rate-limiting.md) — los endpoints de cron también deben estar protegidos
+- [Estrategia .env](/decisiones/env-strategy.md) — `CRON_SECRET` y otras variables de jobs

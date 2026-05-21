@@ -142,6 +142,12 @@ export async function optimizeUpload(buffer: Buffer): Promise<{
 Verificar con:
 
 ```bash
-npx @next/next lint        # detecta missing width/height
+next lint                             # detecta missing width/height en next/image
 npx lighthouse http://localhost:3000 --view
 ```
+
+## Referencias
+
+- [Subida de Archivos](/file-upload.md) — pipeline de subida donde se aplica la optimización Sharp
+- [Performance Budget](/performance-budget.md) — LCP ≤ 2.5s y CLS ≤ 0.1 que impactan las imágenes directamente
+- [Design System](/design-system.md) — uso de `next/image` como componente base del sistema

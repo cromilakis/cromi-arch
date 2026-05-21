@@ -1,7 +1,5 @@
 # Estrategia de Soft Delete
 
-> INVESTIGADO: Prisma $extends soft delete patterns, cleanup strategies.
-
 ## 1. Esquema de Prisma
 
 Agregamos los campos `deletedAt` y `deletedBy` a los modelos que lo requieran.
@@ -40,9 +38,11 @@ Creamos queries base que excluyen soft-deletes automáticamente:
 // src/lib/prisma.ts
 export const prisma = new PrismaClient().$extends({
   query: {
-    $allOperations({ model, operation, args, query }) {
-      // Excluir deletedAt en operaciones de lectura
-      if (['findMany', 'findFirst', 'findUnique'].includes(operation)) {
+    $allOperations({ operation, args, query }) {
+      // Solo findMany y findFirst: findUnique espera campos únicos en where,
+      // agregar deletedAt rompería la query. Usar findFirst cuando necesites
+      // buscar por campo único respetando soft delete.
+      if (['findMany', 'findFirst'].includes(operation)) {
         args.where = { ...args.where, deletedAt: null };
       }
       return query(args);
@@ -113,4 +113,11 @@ model AuditLog {
   detalles    Json?
   creadoEn    DateTime @default(now())
 }
+```
+
+## Referencias
+
+- [Migraciones](/migrations.md) — agregar `deletedAt`/`deletedBy` vía migración expand-contract
+- [Background Jobs](/background-jobs.md) — el cron de limpieza de registros vencidos
+- [Database Patterns](/database-patterns.md) — transacciones e índices para queries con soft delete
 ```

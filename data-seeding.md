@@ -149,3 +149,9 @@ Ejecutar seed de test:
 ```bash
 NODE_ENV=test npx prisma db seed
 ```
+
+## Referencias
+
+- [Migraciones](/migrations.md) — los seeds corren después de `prisma migrate deploy`
+- [Estrategia .env](/decisiones/env-strategy.md) — `.env.test` para la BD de test que recibe los seeds
+- [Testing](/testing.md) — los seeds de test proveen los fixtures para los escenarios BDD

@@ -102,9 +102,9 @@ model Order {
 
   user         User     @relation(fields: [userId], references: [id])
 
-  @index([userId])
-  @index([status, createdAt])
-  @index([createdAt])
+  @@index([userId])
+  @@index([status, createdAt])
+  @@index([createdAt])
 }
 ```
 
@@ -213,3 +213,10 @@ La transacción se revierte automáticamente si cualquier paso falla.
 | Índices compuestos      | Filtros con múltiples columnas           |
 | `$transaction`          | Operaciones atómicas multi-tabla         |
 | `$queryRaw` + parámetros| Queries SQL complejas y seguras          |
+
+## Referencias
+
+- [Paginación API](/pagination.md) — implementación completa de cursor y offset pagination
+- [Búsqueda](/busqueda.md) — índices GIST/GIN con pg_trgm para full-text search
+- [Soft Delete](/soft-delete.md) — patrón de borrado lógico con `$extends`
+- [Migraciones](/migrations.md) — crear índices vía migraciones Prisma

@@ -122,3 +122,9 @@ export function ProductList() {
 | Saltar a página X | No | Sí |
 | Complejidad | Media | Baja |
 | Ideal para | Feeds, timelines, scroll infinito | Tablas admin, paginación numérica |
+
+## Referencias
+
+- [Database Patterns](/database-patterns.md) — cursor y offset pagination en Prisma con ejemplos de índices
+- [Búsqueda](/busqueda.md) — paginar resultados de búsqueda full-text
+- [Performance Budget](/performance-budget.md) — latencia P50 ≤ 200ms como target para endpoints paginados

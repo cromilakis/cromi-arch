@@ -18,7 +18,7 @@ model Producto {
   precio      Float
 
   @@index([nombre], type: BTree)
-  @@index([nombre, descripcion], type: BTree) -- para búsqueda general
+  @@index([nombre, descripcion], type: BTree)
 }
 ```
 
@@ -81,7 +81,7 @@ export async function fuzzySearch(query: string) {
     SELECT *,
       similarity(nombre, ${query}) AS rank
     FROM "Producto"
-    WHERE similarity(nombre, ${query}) > 0.3  -- umbral de similitud
+    WHERE similarity(nombre, ${query}) > 0.3
     ORDER BY rank DESC
     LIMIT 10
   `;

@@ -115,3 +115,10 @@ model File {
   createdAt DateTime @default(now())
 }
 ```
+
+## Referencias
+
+- [Optimización de Imágenes](/image-optimization.md) — pipeline Sharp completo con WebP/AVIF y thumbnails
+- [Soft Delete](/soft-delete.md) — eliminar archivos con borrado lógico antes de purgar de Storage
+- [Rate Limiting](/decisiones/rate-limiting.md) — limitar uploads por usuario para evitar abuso de Storage
+- [OWASP API Security](/owasp-api.md) — validación de MIME type y magic bytes en el servidor
