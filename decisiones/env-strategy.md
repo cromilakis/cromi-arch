@@ -56,6 +56,9 @@ SENTRY_AUTH_TOKEN=
 # Upstash Redis (rate limiting)
 UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
+
+# Logging
+LOG_LEVEL=info
 ```
 
 ## Reglas

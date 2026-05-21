@@ -43,22 +43,23 @@ Sentry.init({
 
 ## Performance Tracing
 
+En Sentry v8, los spans se crean con `startSpan` (el API de `startTransaction` de v7 está deprecado):
+
 ```tsx
-// Medición manual de spans
+// Medición manual de spans (Sentry v8)
 import * as Sentry from '@sentry/nextjs';
 
 export async function GET(request: Request) {
-  const transaction = Sentry.startTransaction({
-    op: 'http.server',
-    name: 'GET /api/products',
-  });
-
-  const span = transaction.startChild({ op: 'db.query' });
-  const products = await db.product.findMany();
-  span.finish();
-
-  transaction.finish();
-  return Response.json(products);
+  return await Sentry.startSpan(
+    { op: 'http.server', name: 'GET /api/products' },
+    async () => {
+      const products = await Sentry.startSpan(
+        { op: 'db.query', name: 'product.findMany' },
+        () => db.product.findMany(),
+      );
+      return Response.json(products);
+    },
+  );
 }
 ```
 
@@ -102,6 +103,8 @@ Configuradas en **sentry.io → Alerts**:
 
 ## Error Boundaries
 
+Para la mayoría de casos usar el Error Boundary de `@sentry/nextjs` (captura automáticamente):
+
 ```tsx
 'use client';
 import { ErrorBoundary } from '@sentry/nextjs';
@@ -109,19 +112,22 @@ import { ErrorBoundary } from '@sentry/nextjs';
 export default function ProductPage({ children }) {
   return (
     <ErrorBoundary
-      fallback={({ error }) => (
-        <div>
-          <h2>Algo salió mal</h2>
-          <p>{error.message}</p>
-          <button onClick={() => window.location.reload()}>
-            Reintentar
-          </button>
-        </div>
+      fallback={({ error, resetError }) => (
+        <ErrorFallback message={error.message} onRetry={resetError} />
       )}
-      onError={(error) => Sentry.captureException(error)}
     >
       {children}
     </ErrorBoundary>
   );
 }
 ```
+
+Para control total sobre la UI de respaldo o lógica adicional, usar la implementación custom definida en [Error Handling](/error-handling.md).
+
+## Referencias
+
+- [Error Handling](/error-handling.md) — las 5 capas donde Sentry actúa como capa 5
+- [Logging](/logging.md) — Pino para logs de aplicación; Sentry para errores y performance
+- [Performance Budget](/performance-budget.md) — alertas de Sentry alineadas con targets de latencia
+- [Estrategia .env](/decisiones/env-strategy.md) — `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_AUTH_TOKEN`
+- [Fase 8 — Monitoreo](/fases/fase-8-monitoreo.md) — dónde se configura Sentry en el flujo de desarrollo

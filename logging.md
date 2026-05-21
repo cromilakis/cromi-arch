@@ -30,30 +30,7 @@ Nunca incluyas en los logs:
 
 ### Redacción automática de campos sensibles
 
-```typescript
-import pino from 'pino';
-
-export const logger = pino({
-  redact: {
-    paths: [
-      'password', 'passwordHash', 'token', 'secret',
-      'authorization', 'cookie', 'creditCard', 'ssn',
-      'email', 'phone', 'headers.cookie',
-    ],
-    censor: '[REDACTED]',
-  },
-  level: process.env.LOG_LEVEL ?? 'info',
-  formatters: {
-    level: (label) => ({ level: label }),
-    bindings: (bindings) => ({
-      pid: bindings.pid,
-      host: bindings.hostname,
-      node_version: process.version,
-    }),
-  },
-  timestamp: pino.stdTimeFunctions.isoTime,
-});
-```
+El logger centralizado (`src/lib/logger.ts`) aplica `redact` automáticamente para los campos listados. Ver la sección **Logger centralizado** más abajo para la implementación completa.
 
 ## Correlation IDs
 
@@ -122,7 +99,7 @@ Cada línea es JSON válido, ideal para ingestión en sistemas como Datadog, Gra
 
 ## Logger centralizado
 
-Archivo `src/lib/logger.ts` — importa desde cualquier lugar:
+Archivo `src/lib/logger.ts` — importa desde cualquier lugar. Combina todo: redact, formatters, pino-pretty en desarrollo:
 
 ```typescript
 import pino from 'pino';
@@ -132,6 +109,35 @@ const isDev = process.env.NODE_ENV === 'development';
 export const logger = pino({
   level: process.env.LOG_LEVEL ?? (isDev ? 'debug' : 'info'),
   transport: isDev ? { target: 'pino-pretty', options: { colorize: true } } : undefined,
-  redact: ['password', 'token', 'authorization', 'email', 'phone', 'secret'],
+  redact: {
+    paths: [
+      'password', 'passwordHash', 'token', 'secret',
+      'authorization', 'cookie', 'creditCard', 'ssn',
+      'email', 'phone', 'headers.cookie',
+    ],
+    censor: '[REDACTED]',
+  },
+  formatters: {
+    level: (label) => ({ level: label }),
+    bindings: () => ({}),  // omitir pid/hostname en producción (Vercel los expone en otro nivel)
+  },
+  timestamp: pino.stdTimeFunctions.isoTime,
 });
 ```
+
+Agregar `LOG_LEVEL` a `.env.example`:
+
+```
+# Logging
+LOG_LEVEL=info   # fatal | error | warn | info | debug
+```
+
+Ver [Estrategia .env](/decisiones/env-strategy.md) para gestión de variables por entorno.
+
+## Referencias
+
+- [Sentry](/sentry.md) — diferencia clave: Pino registra el flujo de la aplicación, Sentry captura errores inesperados
+- [Auditoría](/auditoria.md) — diferencia: Pino es log técnico, audit log es trazabilidad de negocio
+- [Error Handling](/error-handling.md) — los errores 5xx deben loggearse Y enviarse a Sentry
+- [Background Jobs](/background-jobs.md) — los jobs usan el mismo logger centralizado para registrar ejecución
+- [Estrategia .env](/decisiones/env-strategy.md) — `LOG_LEVEL` para controlar verbosidad por entorno

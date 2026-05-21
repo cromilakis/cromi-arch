@@ -43,10 +43,10 @@ const userSchema = z.object({
 
 ## Capa 2: API Route Handler — Formato Consistente
 
-Todas las API routes devuelven errores en formato consistente:
+Todas las API routes devuelven errores en formato plano y consistente:
 
 ```json
-{ "error": { "code": "VALIDATION_ERROR", "message": "...", "details": [...] } }
+{ "error": "Email inválido", "code": "VALIDATION_ERROR", "details": [...] }
 ```
 
 ### Formatos de Respuesta
@@ -175,3 +175,13 @@ Sentry captura todos los errores con stack trace completo y contexto. Se integra
 | 3 | Errores de red y server | TanStack Query (retry, onError) |
 | 4 | UI de respaldo | React Error Boundary |
 | 5 | Registro y monitoreo | Sentry |
+
+> La UI de respaldo en Error Boundary (Capa 4) debe usar componentes del design system, no `<div>` y `<h2>` raw. Ver [Estándares de Diseño](/estandares-diseno.md).
+
+## Referencias
+
+- [Documentación API](/api-docs.md) — formato de respuesta de errores (flat: `{ error, code, details? }`)
+- [Sentry](/sentry.md) — configuración y alertas del registro centralizado (Capa 5)
+- [Errores al Usuario](/errores-usuario.md) — mapeo de códigos de error técnicos a mensajes amigables
+- [Testing](/testing.md) — verificar los 5 estados de error en tests BDD E2E
+- [Logging](/logging.md) — complemento: los errores 5xx también se registran en Pino
