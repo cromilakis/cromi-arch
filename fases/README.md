@@ -1,5 +1,16 @@
 # Fases del Ciclo de Vida SDD + BDD
 
+El harness opera en **dos modos** según el tipo de solicitud:
+
+| Modo | Cuándo | Fases activas |
+|---|---|---|
+| **11 fases completas** | Feature nueva, cambio significativo, impacto en arquitectura o datos | Fases 0 → 10 |
+| **Flujo corto** | Bug fix, cambio menor, ajuste visual | Fases 0 → 5 → 6 → 7 → 9 |
+
+Ver [`flujo-bugfix.md`](/fases/flujo-bugfix.md) para el detalle del flujo corto. En caso de duda, usar las 11 fases.
+
+---
+
 El harness orquesta **11 fases secuenciales**. Cada fase produce artefactos concretos y requiere un **gate humano explícito** (aprobación) antes de avanzar a la siguiente.
 
 ```mermaid
