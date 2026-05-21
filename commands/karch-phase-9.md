@@ -1,4 +1,4 @@
-# karch-fase-9 — CI/CD (Pipeline Hardening)
+# karch-phase-9 — CI/CD (Pipeline Hardening)
 
 ## Purpose
 Harden the CI pipeline scaffolded in Phase 5 by adding security gates, coverage enforcement, dependency audit and the production deploy strategy. Then open the PR and hand control to the human.

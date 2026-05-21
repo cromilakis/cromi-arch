@@ -1,4 +1,4 @@
-# karch-fase-10 — Documentation
+# karch-phase-10 — Documentation
 
 ## Purpose
 Complete and publish all documentation after implementation is final. ADRs are not created here — they were drafted in Phases 1-3 when decisions were made. Here they are completed and published.

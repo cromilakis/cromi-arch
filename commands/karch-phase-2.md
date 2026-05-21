@@ -1,4 +1,4 @@
-# karch-fase-2 — Risk Analysis
+# karch-phase-2 — Risk Analysis
 
 ## Purpose
 Identify security, data, performance and compliance risks **before** designing the architecture. Catching risks here prevents expensive redesigns in Phase 5.

@@ -1,4 +1,4 @@
-# karch-fase-1 — SDD Specification
+# karch-phase-1 — SDD Specification
 
 ## Purpose
 Transform the approved scope into a formal Software Design Document (SDD Spec). This is the written contract of what will be built — not a plan for how to build it.

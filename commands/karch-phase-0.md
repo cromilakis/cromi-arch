@@ -1,4 +1,4 @@
-# karch-fase-0 — Intake & Clarification
+# karch-phase-0 — Intake & Clarification
 
 ## Purpose
 Read the incoming request (GitHub Issue or chat), disambiguate scope, priority and success criteria, and produce a documented initial scope approved by the human before any design or coding begins.

@@ -1,4 +1,4 @@
-# karch-fase-8 — Production Monitoring
+# karch-phase-8 — Production Monitoring
 
 ## Purpose
 Configure production observability: Sentry DSN, performance tracing, alerts and incident runbook. Pino logging and the health endpoint were scaffolded in Phase 5 and verified in Phase 7 — here they connect to external systems and operational procedures are defined.

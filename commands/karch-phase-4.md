@@ -1,4 +1,4 @@
-# karch-fase-4 — BDD Task Breakdown
+# karch-phase-4 — BDD Task Breakdown
 
 ## Purpose
 Decompose the specification into atomic, executable tasks. Each task follows the order: Feature File (Gherkin) → Step Definitions → Implementation code. Tasks are defined here so Phase 5 is pure execution with no design decisions.

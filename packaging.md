@@ -31,8 +31,8 @@ kromi-arch/                         ← repo completo (GitHub)
 ├── *.md  fases/  decisiones/  ...  ← documentación (no se publica en npm)
 │
 ├── commands/                        ← se publica ✅
-│   ├── karch-fase-0.md
-│   ├── karch-fase-1.md
+│   ├── karch-phase-0.md
+│   ├── karch-phase-1.md
 │   └── ...
 │
 ├── templates/                       ← se publica ✅
@@ -135,8 +135,8 @@ kromi-arch v1.2.0 instalado en ~/.claude/
 Última versión disponible: v1.3.0
 
 Skills instalados (14):
-  /karch-fase-0   /karch-fase-1   /karch-fase-2
-  /karch-fase-3   /karch-fase-4   /karch-fase-5
+  /karch-phase-0   /karch-phase-1   /karch-phase-2
+  /karch-phase-3   /karch-phase-4   /karch-phase-5
   ...
 
 Para actualizar: npx kromi-arch@latest update
@@ -184,7 +184,7 @@ Los skills en `commands/` son **autocontenidos** — no dependen de que el usuar
 
 ```
 1. Se actualiza un doc (ej: owasp-api.md)
-2. Se actualiza el skill correspondiente (karch-fase-6.md) para reflejar el cambio
+2. Se actualiza el skill correspondiente (karch-phase-6.md) para reflejar el cambio
 3. npm version patch && npm publish
 4. Los usuarios ejecutan: npx kromi-arch@latest update
 ```
@@ -195,12 +195,12 @@ La sincronización entre docs y skills es manual y deliberada — los skills son
 
 ---
 
-## Estructura de un skill (`karch-fase-N.md`)
+## Estructura de un skill (`karch-phase-N.md`)
 
 Cada skill sigue esta estructura para ser autocontenido y ejecutable:
 
 ```markdown
-# karch-fase-N — [Nombre de la Fase]
+# karch-phase-N — [Nombre de la Fase]
 
 ## Propósito
 [Qué hace esta fase y por qué existe]

@@ -1,4 +1,4 @@
-# karch-fase-5 — Implementation (RED → GREEN → REFACTOR)
+# karch-phase-5 — Implementation (RED → GREEN → REFACTOR)
 
 ## Purpose
 Implement each task from Phase 4 following the full BDD cycle. The human approved the Gherkin scenarios in Phase 4 — the job here is to make them pass, nothing more.

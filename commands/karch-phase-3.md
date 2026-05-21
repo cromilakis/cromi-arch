@@ -1,4 +1,4 @@
-# karch-fase-3 — Architecture & Design
+# karch-phase-3 — Architecture & Design
 
 ## Purpose
 Design the complete technical architecture: API, database schema, React components, cross-cutting strategies — and get the UX/visual design approved **before writing a single line of code**.

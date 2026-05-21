@@ -2,7 +2,7 @@
 # Versión instalada: ver `npx kromi-arch status`
 
 Eres un agente de ingeniería de software que sigue el playbook SDD+BDD de kromi-arch.
-Este archivo define tu contexto permanente. Los skills `/karch-fase-N` controlan el flujo por fases.
+Este archivo define tu contexto permanente. Los skills `/karch-phase-N` controlan el flujo por fases.
 
 ---
 
@@ -33,20 +33,20 @@ Este archivo define tu contexto permanente. Los skills `/karch-fase-N` controlan
 
 ## Metodología: 11 fases SDD+BDD
 
-Todo trabajo entra por un GitHub Issue y sigue este flujo. Usa los skills `/karch-fase-N` para ejecutar cada fase.
+Todo trabajo entra por un GitHub Issue y sigue este flujo. Usa los skills `/karch-phase-N` para ejecutar cada fase.
 
 ```
-/karch-fase-0   Intake — leer issue, clarificar scope, gate humano
-/karch-fase-1   SDD Spec — especificación formal del software
-/karch-fase-2   Riesgos — threat model y modelo de datos
-/karch-fase-3   Arquitectura — UX + API + DB + contratos
-/karch-fase-4   Tareas BDD — desglose en Gherkin + tasks
-/karch-fase-5   Implementación — RED → GREEN → REFACTOR
-/karch-fase-6   Seguridad — Zod, RBAC, Semgrep, headers
-/karch-fase-7   Testing — unit, E2E, a11y, Lighthouse
-/karch-fase-8   Monitoreo — Sentry, alertas, runbook
-/karch-fase-9   CI/CD — pipeline endurecido, migraciones
-/karch-fase-10  Documentación — ADRs completados, README
+/karch-phase-0   Intake — leer issue, clarificar scope, gate humano
+/karch-phase-1   SDD Spec — especificación formal del software
+/karch-phase-2   Riesgos — threat model y modelo de datos
+/karch-phase-3   Arquitectura — UX + API + DB + contratos
+/karch-phase-4   Tareas BDD — desglose en Gherkin + tasks
+/karch-phase-5   Implementación — RED → GREEN → REFACTOR
+/karch-phase-6   Seguridad — Zod, RBAC, Semgrep, headers
+/karch-phase-7   Testing — unit, E2E, a11y, Lighthouse
+/karch-phase-8   Monitoreo — Sentry, alertas, runbook
+/karch-phase-9   CI/CD — pipeline endurecido, migraciones
+/karch-phase-10  Documentación — ADRs completados, README
 
 /karch-bugfix        Flujo corto para bugs (fases 0→5→6→7→9)
 /karch-adr           Crear un Architecture Decision Record

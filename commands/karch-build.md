@@ -29,27 +29,27 @@ Entry point for building a new feature. Runs the complete 11-phase SDD+BDD flow 
 ## Execution flow
 
 ### Phase 0 — Intake
-Follow `/karch-fase-0` fully.
+Follow `/karch-phase-0` fully.
 → **STOP. Wait for human approval of scope before continuing.**
 
 ---
 
 ### Phase 1 — SDD Spec
-Follow `/karch-fase-1` fully.
+Follow `/karch-phase-1` fully.
 - No ambiguities found → advance automatically, notify: *"Phase 1 complete. Spec at `specs/NNN/spec.md`. Advancing to Phase 2."*
 - Ambiguities found → STOP, present questions, wait for answers, then continue.
 
 ---
 
 ### Phase 2 — Risk Analysis
-Follow `/karch-fase-2` fully.
+Follow `/karch-phase-2` fully.
 - No blockers → advance automatically, notify: *"Phase 2 complete. No blockers. Advancing to Phase 3."*
 - Blocker found → STOP, present blocker with options, wait for decision, then continue.
 
 ---
 
 ### Phase 3 — Architecture & Design
-Follow `/karch-fase-3` fully (UX first, then technical architecture).
+Follow `/karch-phase-3` fully (UX first, then technical architecture).
 
 **UX gate:**
 → **STOP. Present UX design and 7-criterion checklist. Wait for explicit approval.**
@@ -61,49 +61,49 @@ Follow `/karch-fase-3` fully (UX first, then technical architecture).
 ---
 
 ### Phase 4 — Task Breakdown
-Follow `/karch-fase-4` fully.
+Follow `/karch-phase-4` fully.
 - No business priority ambiguity → advance automatically.
 - Priority ambiguity between independent tasks → STOP, ask, then continue.
 
 ---
 
 ### Phase 5 — Implementation
-Follow `/karch-fase-5` fully (RED → GREEN → REFACTOR per task).
+Follow `/karch-phase-5` fully (RED → GREEN → REFACTOR per task).
 - All scenarios green + regression OK → advance automatically.
 - Scenario fails or off-spec decision made → STOP, report, wait for direction, then continue.
 
 ---
 
 ### Phase 6 — Security
-Follow `/karch-fase-6` fully.
+Follow `/karch-phase-6` fully.
 - All green → advance automatically, notify: *"Phase 6 complete. Security: all green. Advancing to Phase 7."*
 - Finding detected → STOP, present finding + mitigation, wait for approval, then continue.
 
 ---
 
 ### Phase 7 — Testing
-Follow `/karch-fase-7` fully.
+Follow `/karch-phase-7` fully.
 - All thresholds met → advance automatically, notify: *"Phase 7 complete. Coverage: X%. Lighthouse: X/X. Advancing to Phase 8."*
 - Threshold not met → STOP, report, wait for direction (fix or accept exception), then continue.
 
 ---
 
 ### Phase 8 — Monitoring
-Follow `/karch-fase-8` fully.
+Follow `/karch-phase-8` fully.
 - Configuration complete → advance automatically.
 - Operational decision needed (alert channel, escalation contact) → STOP, ask, then continue.
 
 ---
 
 ### Phase 9 — CI/CD + PR
-Follow `/karch-fase-9` fully. Open PR, run CI, get Vercel preview URL.
+Follow `/karch-phase-9` fully. Open PR, run CI, get Vercel preview URL.
 → **STOP. Report: "PR #NNN opened. CI: ✅. Preview: [URL]. Review and tell me to merge or do it in GitHub."**
 → Wait for explicit human instruction to merge (or human does it directly in GitHub).
 
 ---
 
 ### Phase 10 — Documentation
-Follow `/karch-fase-10` fully (after merge confirmed).
+Follow `/karch-phase-10` fully (after merge confirmed).
 - All complete → close the issue and mark cycle as done: *"Cycle complete. Issue #NNN closed. All ADRs published, runbook finalized."*
 - Gap found → STOP, report, wait for input, then finalize.
 

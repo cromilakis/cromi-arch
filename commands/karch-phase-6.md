@@ -1,4 +1,4 @@
-# karch-fase-6 — Security (Day 1)
+# karch-phase-6 — Security (Day 1)
 
 ## Purpose
 Apply security controls before integral testing. Security is not a final step — it runs immediately after implementation so vulnerabilities never reach the testing or production phase.
