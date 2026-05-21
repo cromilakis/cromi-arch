@@ -127,8 +127,10 @@ export async function GET() {
 7. Regresión: `npm test` completo
 8. Commit convencional: `feat:|fix:|refactor:`
 
-## Gate Humano
+## Gate Humano — Condicional
 
-> "Implementación completa. CI scaffold verde. ¿Revisas el PR/demo?"
+El humano ya aprobó los escenarios Gherkin en Fase 4. Si esos escenarios pasan, la implementación hizo exactamente lo acordado — no hay nada nuevo que decidir.
 
-✅ El humano revisa y aprueba antes de pasar a Fase 6.
+- **Todos los escenarios pasan + regresión verde**: el agente avanza automáticamente: *"Implementación completa. X escenarios verdes, regresión OK. Avanzando a Fase 6."*
+- **Algún escenario falla**: el agente para y reporta: *"Escenario fallido: [nombre]. Causa: [descripción]. ¿Ajusto la implementación o revisamos el escenario?"*
+- **El agente tomó decisiones fuera del spec** *(ambigüedad resuelta de forma no obvia, cambio de alcance detectado)*: el agente para y explica: *"Para implementar [X] tuve que asumir [Y]. ¿Es correcto o lo resuelvo diferente?"*
