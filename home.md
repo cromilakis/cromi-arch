@@ -1,4 +1,4 @@
-# 🧠 Memoria Arquitectónica — SDD + BDD Harness
+# 🏗️ Engineering Playbook — SDD + BDD Harness
 
 Bienvenido a la **documentación viva** del harness de desarrollo agéntico SDD + BDD. Este sistema orquesta el ciclo de vida completo de aplicaciones Next.js + PostgreSQL usando **Spec Kit** para diseño (SDD), **Playwright BDD** para implementación dirigida por comportamiento, y un sistema de **memoria persistente** (pgvector) para continuidad entre sesiones y plataformas.
 
