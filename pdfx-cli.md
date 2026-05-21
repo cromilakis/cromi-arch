@@ -191,3 +191,5 @@ Esto permite que agentes como Hermes puedan interactuar con pdfx-cli directament
 - [Registro npm de pdfx-cli](https://www.npmjs.com/package/pdfx-cli)
 - [@react-pdf/renderer](https://react-pdf.org/)
 - Repositorio oficial: `npx pdfx-cli@latest list` para ver componentes y bloques disponibles
+- [Background Jobs](/background-jobs.md) — generar PDFs en un job asíncrono para reportes pesados
+- [Notificaciones](/notificaciones.md) — enviar el PDF por email con Resend tras generarlo

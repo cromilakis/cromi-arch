@@ -65,3 +65,5 @@ import { Icon } from '@iconify/react'
 - Lucide: https://lucide.dev
 - Iconify: https://iconify.design
 - GitHub Icônes: https://github.com/antfu-collective/icones
+- [Design System](/design-system.md) — Lucide incluido por defecto con shadcn/ui
+- [Estándares de Diseño](/estandares-diseno.md) — iconos se usan dentro de componentes shadcn/ui (Zero Raw HTML)

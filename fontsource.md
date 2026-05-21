@@ -24,21 +24,21 @@ import '@fontsource-variable/jetbrains-mono'
 
 Sin configuración adicional. Las clases `font-sans` y `font-mono` de Tailwind ya apuntan a las variables CSS que Fontsource define.
 
-## Tailwind config
+## Tailwind v4 config
 
-```ts
-// tailwind.config.ts
-export default {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter Variable', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono Variable', 'monospace'],
-      },
-    },
-  },
+Con Tailwind CSS v4 (CSS-first), las fuentes se registran en `globals.css` con `@theme`. No se necesita `tailwind.config.ts` para tokens de tipografía:
+
+```css
+/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', monospace;
 }
 ```
+
+Tailwind genera automáticamente las clases `font-sans` y `font-mono` a partir de estas variables.
 
 ## En nuestro stack
 
@@ -66,3 +66,5 @@ export default {
 - GitHub: https://github.com/fontsource/fontsource
 - npm: `@fontsource-variable/inter`, `@fontsource-variable/jetbrains-mono`
 - Docs: https://fontsource.org/docs/getting-started
+- [Design System](/design-system.md) — fuentes declaradas en `@theme` de globals.css
+- [Performance Budget](/performance-budget.md) — eliminar peticiones externas mejora LCP

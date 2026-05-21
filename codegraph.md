@@ -82,7 +82,7 @@ Esto expone herramientas como `codegraph_query`, `codegraph_context`, `codegraph
 | Tool calls para explorar | 40-50 | 1-6 |
 | Tiempo de exploración | 1-2 min | 17-39s |
 | Archivos leídos | 10-20 | 0 |
-| Tokons gastados | 70k-100k | 40k-80k |
+| Tokens gastados | 70k-100k | 40k-80k |
 
 ## Costo
 
@@ -92,3 +92,4 @@ Esto expone herramientas como `codegraph_query`, `codegraph_context`, `codegraph
 
 - Repositorio: https://github.com/colbymchenry/codegraph
 - npm: `@colbymchenry/codegraph`
+- [AGENTS.md](/templates/AGENTS.md) — el harness usa CodeGraph para contextualizar código antes de cada fase

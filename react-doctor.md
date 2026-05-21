@@ -105,3 +105,5 @@ React Doctor se enfoca específicamente en **salud de React**, algo que ESLint y
 - Repositorio: https://github.com/millionco/react-doctor
 - npm: `react-doctor`
 - Web: https://react.doctor
+- [Performance Budget](/performance-budget.md) — React Doctor complementa las métricas de Core Web Vitals
+- [Fase 9 — CI/CD](/fases/fase-9-cicd.md) — agregar el GitHub Action al pipeline de PR

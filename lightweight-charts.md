@@ -107,3 +107,5 @@ Disponible bajo demanda. Ideal para:
 - GitHub: https://github.com/tradingview/lightweight-charts
 - npm: `lightweight-charts`
 - Docs: https://tradingview.github.io/lightweight-charts/
+- [Analítica](/analytics.md) — combinar con métricas de negocio para dashboards de KPIs
+- [Design System](/design-system.md) — usar CSS variables del tema para colores del gráfico

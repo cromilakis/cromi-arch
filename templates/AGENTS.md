@@ -136,11 +136,11 @@ Cada fase produce artefactos y requiere un **GATE HUMANO** (aprobación explíci
 | `npx vitest run` | Unit + Integration tests |
 | `npx vitest --coverage` | Tests con cobertura |
 | `npx playwright test` | E2E tests |
-| `npm run lint` | ESLint + Prettier |
+| `pnpm lint` | ESLint + Prettier |
 | `npx semgrep --config=auto` | Security scan |
 | `npx prisma migrate dev` | DB migrations |
-| `npm run build` | Build check |
-| `npm audit` | Dependencies audit |
+| `pnpm build` | Build check |
+| `pnpm audit` | Dependencies audit |
 
 ## PREGUNTAS AL HUMANO EN CADA GATE
 

@@ -8,11 +8,11 @@ Usa este prompt cuando inicies un nuevo proyecto o feature con el harness. Copia
 Inicia el desarrollo de una nueva aplicación con el stack:
 
 **Stack:**
-- Next.js 14+ (App Router) con TypeScript strict
+- Next.js (App Router) con TypeScript strict
 - PostgreSQL con Prisma ORM
-- Auth.js (NextAuth) v5
+- Auth.js v5
 - Zod para validación
-- Cucumber + Playwright para BDD
+- Playwright BDD (playwright-bdd + Gherkin) para BDD
 - Sentry + Pino para monitoreo
 
 **Metodología:**
@@ -75,3 +75,10 @@ Skill cargado: sdd-bdd-agentic-harness
 
 ¿Qué vamos a construir?
 ```
+
+## Referencias
+
+- [AGENTS.md](/templates/AGENTS.md) — harness completo con las 10 fases y gates humanos
+- [Tasks Override](/templates/tasks-override.md) — ciclo RED → GREEN → REFACTOR por tarea
+- [Feature Template](/templates/feature-template.md) — plantilla Gherkin + Step Definitions
+- [Testing](/testing.md) — configuración de Vitest, Playwright BDD y SQLite file-based

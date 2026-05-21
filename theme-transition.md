@@ -212,27 +212,29 @@ El repositorio proporciona dos curvas easing personalizadas optimizadas para tra
 
 ## Integración con next-themes (nuestro stack)
 
+> **Regla Zero Raw HTML**: en producción usar `<Button variant="ghost" size="icon">` de shadcn/ui en lugar de `<button>` raw. Ver [Estándares de Diseño](/estandares-diseno.md).
+
 ```tsx
 'use client'
 import { useTheme } from 'next-themes'
+import { Button } from '@/components/ui/button'
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme()
 
-  const handleClick = async (e: React.MouseEvent) => {
+  const handleClick = () => {
+    const nextTheme = resolvedTheme === 'dark' ? 'light' : 'dark'
     if (!document.startViewTransition) {
-      setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+      setTheme(nextTheme)
       return
     }
-
-    const nextTheme = resolvedTheme === 'dark' ? 'light' : 'dark'
     document.startViewTransition(() => setTheme(nextTheme))
   }
 
   return (
-    <button onClick={handleClick} aria-label="Cambiar tema">
+    <Button variant="ghost" size="icon" onClick={handleClick} aria-label="Cambiar tema">
       {resolvedTheme === 'dark' ? '☀️' : '🌙'}
-    </button>
+    </Button>
   )
 }
 ```
@@ -269,4 +271,5 @@ https://docs-arquitectura.vercel.app
 - [Smooth transitions — Chrome Developers](https://developer.chrome.com/docs/web-platform/view-transitions)
 - [rudrodip/theme-toggle-effect](https://github.com/rudrodip/theme-toggle-effect) — Repositorio con todos los efectos
 - [Demo interactiva](https://theme-toggle.rdsx.dev) — Prueba los efectos en vivo
-- [@rds_agi en X/Twitter](https://x.com/rds_agi) — Autor del repositorio
+- [Estándares de Diseño](/estandares-diseno.md) — regla Zero Raw HTML: usar `<Button />` de shadcn/ui
+- [Animaciones](/animaciones.md) — micro-interacciones complementarias con Motion
