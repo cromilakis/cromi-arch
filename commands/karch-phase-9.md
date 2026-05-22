@@ -115,6 +115,9 @@ Review the preview and let me know:
 | `.github/workflows/ci.yml` | Complete hardened CI/CD pipeline |
 
 ## Gate
+
+> Antes de evaluar el gate: ejecutar `/karch-checklist phase=9 issue="<título>"` y resolver todos los items fallidos.
+
 **ALWAYS-STOP gate.**
 
 > "PR #NNN opened. CI: ✅. Preview: [Vercel URL]. Review the preview and tell me if I should merge or you'll do it in GitHub."

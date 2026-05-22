@@ -99,6 +99,9 @@ Document in `docs/monitoring-plan.md`:
 | `sentry.client.config.ts` | Sentry config for client |
 
 ## Gate
+
+> Antes de evaluar el gate: ejecutar `/karch-checklist phase=8 issue="<título>"` y resolver todos los items fallidos.
+
 **Conditional gate:**
 
 - **Configuration complete** (Sentry DSN active, alerts configured, runbook documented): advance automatically → *"Production monitoring ready. Sentry connected, alerts active, runbook at `docs/runbook.md`. Advancing to Phase 9."*

@@ -53,6 +53,7 @@ Todo trabajo entra por un GitHub Issue y sigue este flujo. Usa los skills `/karc
 /karch-migration     Crear migración expand-contract
 /karch-security-check Checklist de seguridad completo
 /karch-playground    Regla playground-first — componentes UI
+/karch-checklist     Gate de calidad por fase y dominio (invocar antes de cada gate)
 ```
 
 Para bugs o cambios menores, usar `/karch-bugfix` en lugar del flujo completo.

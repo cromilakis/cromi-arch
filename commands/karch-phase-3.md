@@ -97,6 +97,8 @@ Design the complete technical architecture: API, database schema, React componen
 
 ## Gate
 
+> Antes de evaluar el gate: ejecutar `/karch-checklist phase=3 issue="<título>"` y resolver todos los items fallidos.
+
 **Two gate moments — both are ALWAYS-STOP for features with UI:**
 
 **Gate A — UX Design**

@@ -197,6 +197,9 @@ export const config = {
 Before completing any task that touches `middleware.ts`: verify that both auth route protection and locale routing are still active.
 
 ## Gate
+
+> Antes de evaluar el gate: ejecutar `/karch-checklist phase=5 issue="<título>"` y resolver todos los items fallidos.
+
 **Conditional gate:**
 
 - **All scenarios pass + regression green**: advance automatically → *"Implementation complete. X scenarios green, regression OK. Advancing to Phase 6."*

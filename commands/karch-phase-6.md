@@ -70,6 +70,9 @@ npx semgrep --config=auto --error
 | `docs/security-audit.md` | Full security audit report with results per checklist item |
 
 ## Gate
+
+> Antes de evaluar el gate: ejecutar `/karch-checklist phase=6 issue="<título>"` y resolver todos los items fallidos.
+
 **Conditional gate:**
 
 - **All green** (Semgrep 0 issues, `npm audit` no high/critical, all checklist items passed): advance automatically → *"Security: all green. 0 vulnerabilities. Full report in `docs/security-audit.md`. Advancing to Phase 7."*

@@ -125,6 +125,9 @@ Use MSW for external HTTP calls — never mock the database (real SQLite/Prisma 
 | `.lighthouse/` | Lighthouse CI reports per route |
 
 ## Gate
+
+> Antes de evaluar el gate: ejecutar `/karch-checklist phase=7 issue="<título>"` y resolver todos los items fallidos.
+
 **Conditional gate:**
 
 - **All thresholds met** (coverage ≥ 80% lines / 70% branches, Lighthouse Performance ≥ 85, a11y ≥ 90, health endpoint OK, 0 failed tests): advance automatically → *"Testing: all green. Coverage: X%. Lighthouse: Performance X / a11y X. Advancing to Phase 8."*
