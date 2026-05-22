@@ -75,7 +75,31 @@ CONTRACT → Make NOT NULL / drop old column.
 
 **Production migrations**: always manual, always with human review. Never run `prisma migrate deploy` on production from CI without explicit approval.
 
-### 4. Open the PR
+### 4. Verificación visual obligatoria antes de crear el PR
+
+**Todo item del test plan debe ser verificado por el agente antes de crear el PR. Los checkboxes los marca el agente, no el humano.**
+
+```bash
+# Levantar servidor local
+npm run dev &
+sleep 5
+
+# Para cada ruta afectada por el feature: navegar y verificar
+npx playwright screenshot --full-page http://localhost:3000/<ruta> /tmp/preview-<ruta>.png
+```
+
+Verificar activamente en el browser o con Playwright:
+- [ ] Todas las imágenes cargan (sin `alt` roto, sin ícono de imagen quebrada)
+- [ ] Todos los íconos renderizan correctamente
+- [ ] Todos los textos visibles en el idioma correcto (sin claves i18n sin resolver tipo `home.hero.title`)
+- [ ] Todos los botones e interacciones funcionan
+- [ ] La página no tiene errores en la consola del browser (`console.error`)
+- [ ] Responsive: verificar al menos mobile (375px) y desktop (1280px)
+- [ ] Los CTAs críticos del issue funcionan (links, formularios, llamadas a acción)
+
+Si algún item falla → corregir antes de crear el PR. **Nunca crear un PR con items de verificación sin chequear o con elementos visualmente rotos.**
+
+### 5. Open the PR
 ```bash
 gh pr create \
   --title "feat: <description>" \
@@ -90,12 +114,21 @@ gh pr create \
 - Lighthouse: Performance X / a11y X
 - Security: Semgrep clean, npm audit clean
 
+## Visual verification (verified by agent before PR)
+- [x] Imágenes cargan sin errores
+- [x] Íconos renderizan correctamente
+- [x] Textos en idioma correcto, sin claves sin resolver
+- [x] CTAs funcionan
+- [x] Sin errores en consola
+- [x] Responsive OK (mobile + desktop)
+- [x] CI: lint + typecheck + tests + build pasan
+
 ## Preview
 Vercel preview URL will appear below once CI passes." \
   --base main
 ```
 
-### 5. Report to human
+### 6. Report to human
 ```
 PR #NNN opened. CI: ✅. Preview: [Vercel URL].
 
@@ -104,7 +137,7 @@ Review the preview and let me know:
 - Or merge directly in GitHub — both trigger the production deploy automatically.
 ```
 
-### 6. Rollback plan
+### 7. Rollback plan
 - **Code**: revert commit on `main` → Vercel redeploy automatic (< 2 min)
 - **Migrations**: follow `docs/runbook.md` — never auto-revert
 - **Feature flags**: disable the feature flag as first line of defense
@@ -130,3 +163,5 @@ The agent opens the PR and delivers the URLs. The merge is executed by the human
 - CI fails on PR: fix the failing gate, do not force-push or skip checks
 - Production migration runs automatically in CI: remove it immediately — production migrations are always manual
 - PR opened against wrong base branch: close and reopen against `main`
+- PR creado con checkboxes del test plan sin marcar: el agente no verificó — cerrar el PR, verificar cada item, reabrirlo con todo marcado
+- Imagen rota, ícono faltante o texto hardcodeado visible en el preview: el PR no debe existir — estos son bugs de implementación, no tareas del reviewer

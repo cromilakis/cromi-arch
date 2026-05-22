@@ -129,6 +129,13 @@ Los hooks de Husky corren automáticamente en el commit — si fallan, corregir 
 - Los ADRs se crean como borradores cuando se toma la decisión, no al final
 - CI scaffold (lint + build + tests básicos) debe estar corriendo desde el primer commit de Fase 5
 
+### Verificación visual — obligatoria antes de crear cualquier PR con UI
+- Levantar `npm run dev` y navegar a cada ruta afectada **antes** de crear el PR
+- Verificar: imágenes cargan, íconos renderizan, textos en idioma correcto, sin errores en consola
+- Verificar responsive: mobile (375px) y desktop (1280px)
+- Los checkboxes del test plan en el PR description los marca el agente tras verificar — nunca dejarlos sin marcar
+- **Nunca crear un PR con elementos visualmente rotos** — imagen rota, ícono faltante o clave i18n sin resolver son bugs de implementación, no tareas del reviewer
+
 ### UI — Playground-first (obligatorio)
 - **Ningún elemento HTML nativo de presentación en páginas**: `h1–h6`, `p`, `button`, `input`, `select`, `textarea`, `span` con estilo — nunca directamente en JSX de pages o layouts
 - Todo elemento visual reutilizable nace en el playground (`/playground`), se valida ahí, y las páginas solo lo consumen por props

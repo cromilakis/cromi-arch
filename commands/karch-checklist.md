@@ -107,6 +107,25 @@ grep -rn "usePathname" src/ --include="*.tsx" --include="*.ts" | grep "next/navi
 - [ ] Estado `empty`: mensaje descriptivo + call to action
 - [ ] Sin valores hardcodeados de color o tipografía — solo design tokens de Tailwind
 
+#### `ui-visual` (Phase 5, 9 — antes de cada commit con UI y antes de crear el PR)
+
+```bash
+# Levantar servidor y tomar screenshot por ruta afectada
+npm run dev &
+sleep 5
+npx playwright screenshot --full-page http://localhost:3000/<ruta> /tmp/check-<ruta>.png
+```
+
+- [ ] Todas las imágenes cargan — sin ícono de imagen rota (`<img>` con `src` inválido)
+- [ ] Todos los íconos renderizan — SVGs, lucide-react, react-icons visibles
+- [ ] Sin claves i18n sin resolver visibles en pantalla (ej: `home.hero.cta` como texto literal)
+- [ ] Sin errores en consola del browser (`TypeError`, `404`, `Failed to load resource`)
+- [ ] Responsive verificado: mobile 375px y desktop 1280px
+- [ ] CTAs del issue funcionan al hacer clic (links abren, formularios responden)
+- [ ] Logo y assets de marca cargan correctamente
+
+**Esta verificación la ejecuta el agente — no es una lista para el reviewer humano.**
+
 #### `ui-a11y` (Phase 7)
 ```bash
 npx bddgen && npx playwright test --grep "accessibility"
