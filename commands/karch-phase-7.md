@@ -8,6 +8,19 @@ Run the complete test suite and verify all coverage thresholds. The health endpo
 - Phase 6 security audit passed
 - CI scaffold from Phase 5 running
 
+## Pre-flight: verify playground-first compliance
+
+```bash
+# Raw HTML presentation elements must not appear in pages or layouts
+grep -rn \
+  -e "<h[1-6]" -e "<button" -e "<input" \
+  -e "<select" -e "<textarea" -e "<p " -e "<p>" \
+  src/app/ --include="*.tsx" \
+  | grep -v playground | grep -v ".test."
+```
+
+Any output is a violation — replace with the corresponding primitive from `src/components/primitives/` before proceeding.
+
 ## Pre-flight: verify tests actually exist for Phase 5 code
 
 Before running the suite, verify that unit tests exist for each module created or modified in Phase 5:

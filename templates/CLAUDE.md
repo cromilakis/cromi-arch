@@ -52,6 +52,7 @@ Todo trabajo entra por un GitHub Issue y sigue este flujo. Usa los skills `/karc
 /karch-adr           Crear un Architecture Decision Record
 /karch-migration     Crear migración expand-contract
 /karch-security-check Checklist de seguridad completo
+/karch-playground    Regla playground-first — componentes UI
 ```
 
 Para bugs o cambios menores, usar `/karch-bugfix` en lugar del flujo completo.
@@ -114,6 +115,19 @@ Si `kromi-search` falla con "Cannot connect", el contenedor no está corriendo: 
 - Nunca avanzar de fase sin aprobación humana explícita en los gates siempre-stop (fases 0, 3-UX, 9)
 - Los ADRs se crean como borradores cuando se toma la decisión, no al final
 - CI scaffold (lint + build + tests básicos) debe estar corriendo desde el primer commit de Fase 5
+
+### UI — Playground-first (obligatorio)
+- **Ningún elemento HTML nativo de presentación en páginas**: `h1–h6`, `p`, `button`, `input`, `select`, `textarea`, `span` con estilo — nunca directamente en JSX de pages o layouts
+- Todo elemento visual reutilizable nace en el playground (`/playground`), se valida ahí, y las páginas solo lo consumen por props
+- Si el componente no existe en el playground → crearlo ahí primero, luego usarlo
+- Si necesita una variante nueva → agregarla al componente del playground, no con `className` inline en la página
+- Verificar con: `grep -rn "<h[1-6]\|<button\|<input\|<p " src/app/ --include="*.tsx" | grep -v playground`
+- Ver `/karch-playground` para el flujo completo
+
+### i18n (obligatorio en cualquier texto visible)
+- Todo string visible al usuario usa `t('key')` de next-intl — cero strings hardcodeados en JSX
+- `usePathname` y `Link` siempre desde `createNavigation` de next-intl, nunca de `next/navigation` o `next/link`
+- Layouts y pages bajo `[locale]` reciben `params: Promise<{locale: string}>` y llaman `setRequestLocale`
 
 ### Calidad
 - Coverage mínimo: 80% lines, 70% branches en código nuevo

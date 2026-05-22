@@ -44,6 +44,8 @@ export async function GET() {
 
 > **Hard rule — non-negotiable**: the Feature File for each task MUST be created and tests must be in RED before a single line of implementation code is written. If the Feature File path from `tasks.md` does not exist on disk, create it now. Do not skip to Step 4 under any circumstance.
 
+> **Playground-first — non-negotiable**: before writing any JSX in a page or layout, apply the `/karch-playground` decision flow. If a component does not exist in the playground, create it there first. Raw HTML presentation elements (`h1`, `button`, `p`, `input`, etc.) are never written directly in pages — only playground primitives are used.
+
 ### Step 1 — Write the Feature File (Gherkin)
 ```gherkin
 # features/<domain>/<name>.feature

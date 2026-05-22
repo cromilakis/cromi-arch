@@ -51,6 +51,8 @@ Design the complete technical architecture: API, database schema, React componen
 3. **Component architecture** — aligned with approved mockups
    - Map mockup components to file paths in `src/`
    - Confirm Server vs Client boundary decisions
+   - For each component: verify it exists in the playground or add "create in playground" as a task in Phase 4
+   - See `/karch-playground` for the playground-first rule — no HTML native elements in pages
 
 4. **Cross-cutting strategies**
    - Auth: Auth.js v5 session check pattern (`const session = await auth()`)
