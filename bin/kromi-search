@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+'use strict';
+
+const path = require('path');
+// Resolve src/ relative to this bin file regardless of how it's invoked
+const ROOT = path.join(__dirname, '..');
+process.chdir(ROOT);
+
+const { search } = require('../src/search');
+
+const args = process.argv.slice(2);
+const limitFlag = args.findIndex(a => a === '--limit' || a === '-n');
+let limit = 5;
+let queryParts = args;
+
+if (limitFlag !== -1) {
+  limit = parseInt(args[limitFlag + 1], 10) || 5;
+  queryParts = args.filter((_, i) => i !== limitFlag && i !== limitFlag + 1);
+}
+
+const query = queryParts.join(' ').trim();
+
+if (!query) {
+  console.error('Usage: kromi-search "<query>" [--limit N]');
+  console.error('');
+  console.error('Examples:');
+  console.error('  kromi-search "stripe webhook idempotency"');
+  console.error('  kromi-search "rate limiting thresholds" --limit 3');
+  process.exit(1);
+}
+
+(async () => {
+  try {
+    const results = await search(query, limit);
+
+    if (results.length === 0) {
+      console.log('No results found for: ' + query);
+      process.exit(0);
+    }
+
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      const score = Math.round((r.normalizedScore ?? r.score) * 100);
+      const tags = r.tags?.length ? `  [${r.tags.join(', ')}]` : '';
+      const header = r.section
+        ? `${r.source_file} — ${r.section}`
+        : r.source_file;
+
+      console.log(`\n${'─'.repeat(60)}`);
+      console.log(`[${i + 1}] ${header}  (${score}%)${tags}`);
+      console.log('─'.repeat(60));
+      console.log(r.content);
+    }
+    console.log('');
+  } catch (e) {
+    if (e.message.includes('OpenAI API key')) {
+      console.error(e.message);
+    } else if (e.code === 'ECONNREFUSED' || e.message.includes('connect')) {
+      console.error('Cannot connect to kromi knowledge DB.');
+      console.error('Start it with:  npx kromi-arch db:start');
+    } else {
+      console.error('Error: ' + e.message);
+    }
+    process.exit(1);
+  }
+})();

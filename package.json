@@ -1,0 +1,50 @@
+{
+  "name": "kromi-arch",
+  "version": "0.6.1",
+  "description": "Engineering Playbook — Claude Code skills, metodología SDD+BDD y knowledge base semántica para Next.js",
+  "bin": {
+    "kromi-arch": "bin/cli.js",
+    "kromi-search": "bin/kromi-search"
+  },
+  "files": [
+    "bin/",
+    "commands/",
+    "templates/",
+    "src/",
+    "docker/",
+    "*.md",
+    "decisiones/",
+    "fases/",
+    "references/",
+    "knowledge.json.gz"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "engineering-playbook",
+    "nextjs",
+    "sdd",
+    "bdd",
+    "pgvector",
+    "kromi-arch"
+  ],
+  "author": "Isaias Peña Cromilakis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipcromilakis/kromi-arch.git"
+  },
+  "scripts": {
+    "test:install": "node bin/cli.js install --local",
+    "test:uninstall": "node bin/cli.js uninstall --local",
+    "test:status": "node bin/cli.js status --local",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "openai": "^6.39.0",
+    "pg": "^8.21.0"
+  }
+}

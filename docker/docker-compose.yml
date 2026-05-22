@@ -1,0 +1,22 @@
+services:
+  kromi-db:
+    image: pgvector/pgvector:pg16
+    container_name: kromi-knowledge-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: kromi_knowledge
+      POSTGRES_USER: kromi
+      POSTGRES_PASSWORD: kromi
+    volumes:
+      - kromi_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kromi -d kromi_knowledge"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kromi_data:
+    name: kromi_knowledge_data
