@@ -431,7 +431,7 @@ async function release() {
   log('  Commiteando y pusheando...');
   execSync('git add knowledge.json.gz package.json package-lock.json README.md', { cwd: ROOT, stdio: 'inherit' });
   execSync(`git commit -m "chore: update knowledge base v${newPkg.version}"`, { cwd: ROOT, stdio: 'inherit' });
-  execSync('git push', { cwd: ROOT, stdio: 'inherit' });
+  execSync('git push --set-upstream origin main', { cwd: ROOT, stdio: 'inherit' });
   ok('Push completado');
   log('');
 
