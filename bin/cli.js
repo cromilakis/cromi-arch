@@ -62,6 +62,44 @@ function dockerCompose(args, opts = {}) {
   return result;
 }
 
+// ─── spec-kit ─────────────────────────────────────────────────────────────────
+
+function installSpecKit() {
+  log('Spec-Kit (SDD methodology):');
+
+  // Check if already installed
+  const check = spawnSync('speckit', ['--version'], { stdio: 'pipe' });
+  if (check.status === 0) {
+    ok('spec-kit ya instalado');
+    log('');
+    return;
+  }
+
+  // Check if uv is available
+  const uvCheck = spawnSync('uv', ['--version'], { stdio: 'pipe' });
+  if (uvCheck.status !== 0) {
+    fail('spec-kit requiere uv — instalá uv primero: https://docs.astral.sh/uv/getting-started/installation/');
+    dim('  Luego ejecutá: uv tool install specify-cli --from git+https://github.com/github/spec-kit.git');
+    log('');
+    return;
+  }
+
+  log('  Instalando spec-kit via uv...');
+  const result = spawnSync(
+    'uv',
+    ['tool', 'install', 'specify-cli', '--from', 'git+https://github.com/github/spec-kit.git'],
+    { stdio: 'inherit' }
+  );
+
+  if (result.status === 0) {
+    ok('spec-kit instalado correctamente');
+  } else {
+    fail('Error al instalar spec-kit. Instalá manualmente:');
+    dim('  uv tool install specify-cli --from git+https://github.com/github/spec-kit.git');
+  }
+  log('');
+}
+
 // ─── install / uninstall / status ─────────────────────────────────────────────
 
 function install(opts = {}) {
@@ -122,6 +160,9 @@ function install(opts = {}) {
   log('Skills disponibles en Claude Code:');
   files.forEach(f => dim(`  /${f.replace('.md', '')}`));
   log('');
+
+  // Install spec-kit (required for /karch-phase-1)
+  installSpecKit();
 
   // Auto-restore knowledge base if Docker is running and dump exists
   const dumpPath = path.join(ROOT, 'knowledge.json.gz');

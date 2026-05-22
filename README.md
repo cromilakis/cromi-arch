@@ -53,6 +53,7 @@
 - Node.js >= 18
 - Docker Desktop (para la knowledge base)
 - OpenAI API key (para búsqueda semántica)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (para instalar spec-kit automáticamente)
 
 ### 1. Instalar el paquete
 
