@@ -34,6 +34,32 @@ Follow `/karch-phase-0` fully.
 
 ---
 
+### Branch creation — immediately after Phase 0 approval
+
+**Before touching any file**, create and switch to the feature branch:
+
+```bash
+# Ensure main is up to date
+git checkout main && git pull origin main
+
+# Create branch from main — naming convention: feat/NNN-short-description
+git checkout -b feat/<NNN>-<short-description>
+
+# If there are uncommitted changes on main (should not happen — flag this):
+# git stash && git checkout -b feat/<NNN>-<short-description> && git stash pop
+```
+
+Branch naming:
+- Features: `feat/<issue-number>-<kebab-case-description>`
+- Bugs: `fix/<issue-number>-<kebab-case-description>`
+- Example: `feat/42-home-page`, `fix/87-navbar-logo`
+
+Report: *"Branch `feat/NNN-description` created from main. Starting Phase 1."*
+
+> **Error signal**: if any file was already modified on `main` before this step — stash the changes, create the branch, pop the stash, and flag it to the human: *"Work started on main before branching — moved changes to `feat/NNN-description`. Please verify nothing was committed to main."*
+
+---
+
 ### Phase 1 — SDD Spec
 Follow `/karch-phase-1` fully.
 - No ambiguities found → advance automatically, notify: *"Phase 1 complete. Spec at `specs/NNN/spec.md`. Advancing to Phase 2."*
