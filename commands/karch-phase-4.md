@@ -68,6 +68,8 @@ Depends on: T-01
 
 The human does not need to order tasks — only confirm or adjust if they have business context the agent lacks.
 
+> **BDD enforcement**: every task in `tasks.md` must have a `Feature file:` path assigned. Phase 5 will create that file first and put tests in RED before writing any implementation code. Tasks without a Feature file path are incomplete — do not advance to Phase 5 until every task has one.
+
 ## Error signals
 - Task too large (more than 3 scenarios or touches more than 2 system layers): split into subtasks
 - Circular dependency detected: restructure tasks to break the cycle

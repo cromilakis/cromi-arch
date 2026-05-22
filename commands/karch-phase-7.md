@@ -8,6 +8,20 @@ Run the complete test suite and verify all coverage thresholds. The health endpo
 - Phase 6 security audit passed
 - CI scaffold from Phase 5 running
 
+## Pre-flight: verify tests actually exist for Phase 5 code
+
+Before running the suite, verify that unit tests exist for each module created or modified in Phase 5:
+
+```bash
+# List new source files from Phase 5
+git diff main --name-only --diff-filter=A -- 'src/**/*.ts' 'src/**/*.tsx'
+
+# For each file, verify a corresponding test exists
+# Pattern: src/components/Foo.tsx → src/components/Foo.test.tsx or tests/unit/Foo.test.ts
+```
+
+If any Phase 5 module has **0 unit tests**, write them before running the suite. `passWithNoTests: true` is only valid during the initial project scaffold — it is not acceptable for a real feature implementation. The runner not failing is not the same as tests passing.
+
 ## Test types and execution
 
 ### Unit & Integration tests (Vitest)
@@ -107,4 +121,6 @@ Use MSW for external HTTP calls — never mock the database (real SQLite/Prisma 
 - Test passes with mocked database: remove the mock, use SQLite Prisma push instead
 - Lighthouse a11y < 90: fix before proceeding — a11y is not optional
 - Health endpoint returns non-200: fix before Phase 8 (monitoring depends on it)
-- 0% coverage on a new module: there are missing unit tests — add them
+- 0% coverage on a new module: there are missing unit tests — add them before proceeding
+- `passWithNoTests: true` accepted as "tests passed" for a real feature: this is a false green — write the missing tests
+- Gherkin scenarios from Phase 4 not present in the E2E run: the Feature Files were not created — this is a Phase 5 failure that must be corrected before Phase 7 can close

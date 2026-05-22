@@ -60,7 +60,29 @@ Design the complete technical architecture: API, database schema, React componen
    - Validation: Zod at every API boundary
    - i18n: next-intl keys
 
-5. **Write draft ADRs** for every new architectural decision made here
+5. **Write draft ADRs** for every non-trivial architectural decision made here
+
+   A decision is non-trivial if it meets any of these criteria:
+   - Introduces or configures a routing strategy (e.g., `[locale]` segment, parallel routes)
+   - Extends or deviates from an existing playbook pattern (e.g., custom Button variant strategy)
+   - Has non-obvious consequences on other parts of the codebase (e.g., middleware chain order)
+   - Chooses between two or more valid alternatives
+
+   Each ADR must be created as a file in `docs/adr/` before Gate B. The ADR template:
+   ```markdown
+   # ADR-NNN: <title>
+   Status: Draft
+   Date: YYYY-MM-DD
+
+   ## Context
+   <What situation or constraint led to this decision>
+
+   ## Decision
+   <What was decided>
+
+   ## Consequences
+   <What becomes easier, what becomes harder, what must be updated elsewhere>
+   ```
 
 ## Artifacts produced
 | File | Description |
@@ -80,8 +102,15 @@ Design the complete technical architecture: API, database schema, React componen
 → Wait for explicit approval before designing the technical architecture.
 
 **Gate B — Technical Architecture** (conditional)
-- **Following playbook patterns** (Prisma, Route Handlers, TanStack Query, Auth.js — no deviations): advance automatically → *"Architecture in `docs/architecture.md`. Applies established patterns without deviations. Advancing to Phase 4."*
+
+Before evaluating, verify:
+- [ ] At least one draft ADR exists in `docs/adr/` for each non-trivial decision taken in this phase
+- [ ] `docs/architecture.md` is written
+
+Then:
+- **Following playbook patterns AND ADRs produced for non-trivial decisions**: advance automatically → *"Architecture in `docs/architecture.md`. ADRs written: [list]. Advancing to Phase 4."*
 - **Deviating from playbook** (new library, undefined pattern, schema decision with non-obvious consequences): stop and present options → *"For [X] there is no defined pattern in the playbook. Options: [A] / [B]. Which do you prefer?"*
+- **Non-trivial decision taken but no ADR written**: stop → *"Decision [X] was made but no ADR was created. Writing ADR-NNN now before advancing."*
 
 For backend-only features: only Gate B applies.
 

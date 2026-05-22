@@ -42,6 +42,8 @@ export async function GET() {
 
 **Repeat for each task in `tasks.md`:**
 
+> **Hard rule — non-negotiable**: the Feature File for each task MUST be created and tests must be in RED before a single line of implementation code is written. If the Feature File path from `tasks.md` does not exist on disk, create it now. Do not skip to Step 4 under any circumstance.
+
 ### Step 1 — Write the Feature File (Gherkin)
 ```gherkin
 # features/<domain>/<name>.feature
@@ -115,6 +117,64 @@ git commit -m "feat(<domain>): <description>"
 # One commit per task — no mixed purposes
 ```
 
+## next-intl [locale] routing — mandatory checks when i18n is configured
+
+If the project uses `[locale]` routing with next-intl, the following three issues MUST be handled whenever modifying routing, navigation, or layouts:
+
+### A — `usePathname()` returns locale-prefixed paths
+`usePathname()` from `next/navigation` returns `/es/ruta`. Any active-state check using `pathname.startsWith("/ruta")` will silently break. Replace all such comparisons with the `usePathname` from `next-intl/navigation` (created via `createNavigation`), which strips the locale prefix automatically.
+
+```bash
+# Grep before and after any routing change
+grep -r "usePathname" src/ --include="*.tsx" --include="*.ts"
+grep -r 'startsWith("/' src/ --include="*.tsx"
+```
+
+### B — `next/link` is not locale-aware
+`<Link href="/ruta">` from `next/link` does not inject the current locale. Replace ALL imports of `Link` from `next/link` with the locale-aware `Link` exported by `createNavigation` from next-intl.
+
+```bash
+# Find all Link imports from next/link and update them
+grep -r "from 'next/link'" src/ --include="*.tsx" --include="*.ts"
+grep -r 'from "next/link"' src/ --include="*.tsx" --include="*.ts"
+```
+
+Every file in the output must be updated — not just the new files created in this task.
+
+### C — Layouts and pages must receive `params: Promise<{locale: string}>` and call `setRequestLocale`
+Any layout or page under the `[locale]` segment that lacks this call falls back to dynamic rendering.
+
+```bash
+# Find all layouts/pages that may be missing it
+grep -rL "setRequestLocale" src/app/\[locale\]/ --include="*.tsx"
+```
+
+Update every file in the output. Stub pages with hardcoded text must also have their text replaced with `t('key')` i18n calls at this point.
+
+### D — Auth.js middleware must not be replaced by next-intl middleware
+When adding `createIntlMiddleware` to `middleware.ts` (or `proxy.ts`), combine both middlewares in chain — never replace one with the other. The pattern:
+
+```typescript
+// middleware.ts
+import NextAuth from 'next-auth'
+import createIntlMiddleware from 'next-intl/middleware'
+import { authConfig } from './auth.config'
+
+const intlMiddleware = createIntlMiddleware({ locales, defaultLocale })
+const { auth } = NextAuth(authConfig)
+
+export default auth(async (req) => {
+  const response = intlMiddleware(req)
+  return response
+})
+
+export const config = {
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
+}
+```
+
+Before completing any task that touches `middleware.ts`: verify that both auth route protection and locale routing are still active.
+
 ## Gate
 **Conditional gate:**
 
@@ -123,7 +183,9 @@ git commit -m "feat(<domain>): <description>"
 - **Agent made decisions outside the spec** (ambiguity resolved in a non-obvious way, scope change detected): stop and explain → *"To implement [X] I had to assume [Y]. Is that correct or should I handle it differently?"*
 
 ## Error signals
-- Implementing without a Feature File first: stop, write the Feature File first
-- Skipping RED verification: do not proceed to GREEN without seeing tests fail
+- Implementing without a Feature File first: **stop immediately**, write the Feature File first — this is non-negotiable
+- Skipping RED verification: do not proceed to GREEN without seeing tests fail — passing without RED means the test is not testing anything
 - Test passes without implementation: the step definition is wrong — fix it before proceeding
 - `npm test` regression: do not commit, fix all broken tests first
+- Replacing `middleware.ts` auth logic with intl logic: this removes route protection silently — always combine both
+- Using `next/link` or `next/navigation` `usePathname` in a `[locale]` project: grep the entire `src/` and fix every occurrence before closing the task
