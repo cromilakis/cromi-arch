@@ -1,6 +1,6 @@
 {
   "name": "kromi-arch",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Engineering Playbook — Claude Code skills, metodología SDD+BDD y knowledge base semántica para Next.js",
   "bin": {
     "kromi-arch": "bin/cli.js",
