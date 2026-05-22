@@ -88,6 +88,18 @@ Si `kromi-search` falla con "Cannot connect", el contenedor no está corriendo: 
 
 ## Reglas no negociables
 
+### CI local — obligatorio antes de cada commit
+Antes de hacer `git commit` en cualquier tarea, correr en este orden:
+```bash
+npx tsc --noEmit   # cero errores de TypeScript
+npm run lint        # cero errores ESLint
+npx vitest run      # todos los tests en verde
+npm run build       # build de producción exitoso
+npx semgrep --config auto src/ --error  # cero hallazgos high/critical
+```
+Si alguno falla → corregir antes de commitear. Nunca usar `--no-verify` ni ignorar warnings.
+Los hooks de Husky corren automáticamente en el commit — si fallan, corregir la causa raíz.
+
 ### Git y deploy
 - Nunca push directo a `main` — todo cambio va por PR
 - Squash merge al mergear a `main`

@@ -106,11 +106,30 @@ npx bddgen && npx playwright test --grep "<scenario name>"
 - Improve readability, extract helpers, remove duplication
 - Tests must remain green throughout
 
-### Step 7 — Full regression
+### Step 7 — Local CI gate (mandatory before every commit)
+
+Run the full local CI suite in this exact order. All must pass — do not commit if any fails:
+
 ```bash
-npm test
-# 100% green before committing
+# 1. Type check — zero TypeScript errors
+npx tsc --noEmit
+
+# 2. Lint — zero ESLint errors or warnings
+npm run lint
+
+# 3. Unit tests — all green
+npx vitest run
+
+# 4. Build — production build must succeed
+npm run build
+
+# 5. Security scan — zero high/critical findings
+npx semgrep --config auto src/ --error
 ```
+
+Pre-commit hooks (Husky + lint-staged) run automatically on `git commit` and will catch lint and format issues. The local CI gate above runs the full suite **before** attempting the commit.
+
+If any step fails: fix it before proceeding. Do not skip, ignore warnings, or use `--no-verify`.
 
 ### Step 8 — Conventional commit
 ```bash
@@ -188,6 +207,7 @@ Before completing any task that touches `middleware.ts`: verify that both auth r
 - Implementing without a Feature File first: **stop immediately**, write the Feature File first — this is non-negotiable
 - Skipping RED verification: do not proceed to GREEN without seeing tests fail — passing without RED means the test is not testing anything
 - Test passes without implementation: the step definition is wrong — fix it before proceeding
-- `npm test` regression: do not commit, fix all broken tests first
+- Any local CI step failing before commit: fix it — do not commit with a broken build, type errors, or lint warnings
+- `--no-verify` on git commit: never — if the hook fails, fix the underlying issue
 - Replacing `middleware.ts` auth logic with intl logic: this removes route protection silently — always combine both
 - Using `next/link` or `next/navigation` `usePathname` in a `[locale]` project: grep the entire `src/` and fix every occurrence before closing the task
