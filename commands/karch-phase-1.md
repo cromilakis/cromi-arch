@@ -9,26 +9,69 @@ Transform the approved scope into a formal Software Design Document (SDD Spec). 
 
 ## Steps
 
-1. **Check if a project constitution exists**
-   - If not: run `/speckit.constitution <topic>` to create the project-level constitution
-   - The constitution captures long-term context: team, domain, constraints, non-goals
+### 1. Generar el spec
 
-2. **Generate the spec**
-   Run `/speckit.specify <description>` using the approved scope as input.
-   The spec is created at `specs/NNN-feature/spec.md`.
+**Opción A — speckit disponible** (verificar con `ls .claude/commands/ | grep speckit`):
+```
+/speckit.constitution <topic>   ← solo si no existe aún
+/speckit.specify <description>  ← genera specs/NNN-feature/spec.md
+```
 
-3. **Check for `[NEEDS CLARIFICATION]` markers**
-   - If found: run `/speckit.clarify` and resolve each marker
-   - Do not advance with unresolved markers
+**Opción B — speckit no disponible** (default cuando no está instalado):
+Generar `specs/NNN-feature/spec.md` directamente con esta estructura:
 
-4. **Verify the spec covers**
-   - All main functionalities from the approved scope
-   - Known edge cases and error paths
-   - Implicit acceptance criteria (what "done" looks like)
-   - Data inputs and outputs for each flow
+```markdown
+# Spec: NNN — <Feature name>
 
-5. **Write draft ADR** if the spec implies a new architectural decision not covered by the playbook
-   (ADRs are written when the decision is made, not at the end)
+## Context
+<Why this feature exists and what problem it solves>
+
+## Scope (from approved Phase 0)
+<Exact scope approved in .specify/scope-initial.md>
+
+## Out of scope
+<What explicitly will NOT be built in this iteration>
+
+## Actors
+- <Actor 1>: <role and permissions>
+- <Actor 2>: <role and permissions>
+
+## Functional requirements
+### FR-01: <Requirement name>
+- Description: <what the system must do>
+- Input: <data received>
+- Output: <data returned or state change>
+- Acceptance criteria:
+  - Given <precondition>, when <action>, then <result>
+  - Given <precondition>, when <error condition>, then <error result>
+
+### FR-02: ...
+
+## Non-functional requirements
+- Performance: <response time, load expectations>
+- Security: <auth required, data sensitivity>
+- Accessibility: WCAG 2.1 AA
+
+## Edge cases and error paths
+- <Edge case 1>: <expected behavior>
+- <Edge case 2>: <expected behavior>
+
+## Open questions
+- [NEEDS CLARIFICATION] <question> ← mark any undefined point
+```
+
+### 2. Resolver marcadores `[NEEDS CLARIFICATION]`
+- Si el spec contiene marcadores sin resolver: detener y presentar las preguntas al humano (máximo 4 por ronda, con opciones)
+- No avanzar con ningún marcador pendiente
+
+### 3. Verificar cobertura del spec
+- Todas las funcionalidades del scope aprobado en Phase 0
+- Casos de error y edge cases identificados
+- Criterios de aceptación explícitos para cada FR
+- Inputs y outputs definidos por flujo
+
+### 4. Escribir ADR borrador si el spec implica una decisión arquitectónica nueva
+   (ADRs se escriben cuando se toma la decisión, no al final)
 
 ## Artifacts produced
 | File | Description |
